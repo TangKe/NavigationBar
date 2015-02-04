@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:navigationbar="http://schemas.android.com/apk/res-auto" >
+
+    <me.tangke.navigationbar.AutoStateButton
+        android:id="@id/primaryNavigationItem"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="?attr/navigationBarItemBackground"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
+    <Spinner
+        android:id="@id/listNavigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:dropDownSelector="@drawable/navigation_list_selector"
+        android:dropDownVerticalOffset="1px"
+        android:listSelector="@drawable/navigation_list_selector"
+        android:popupBackground="@drawable/navigation_list_dropdown_background"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@id/navigationTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawablePadding="5dp"
+        android:gravity="center" />
+
+    <me.tangke.navigationbar.AutoStateButton
+        android:id="@id/secondaryNavigationItem"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="?attr/navigationBarItemBackground"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
+    <FrameLayout
+        android:id="@+id/navigationCustomContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</merge>

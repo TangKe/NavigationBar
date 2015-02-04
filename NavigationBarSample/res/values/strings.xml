@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NavigationBarDemo</string>
+    <string name="title_navigation_bar_attribute">NavigationBar属性</string>
+
+</resources>

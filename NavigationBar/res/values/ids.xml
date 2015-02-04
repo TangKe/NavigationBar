@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="primaryNavigationItem" type="id"/>
+    <item name="secondaryNavigationItem" type="id"/>
+    <item name="navigationTitle" type="id"/>
+    <item name="listNavigation" type="id"/>
+    <item name="navigationBarContainer" type="id"/>
+    <item name="navigationBar" type="id"/>
+    <item name="navigationBarContentContainer" type="id"/>
+
+</resources>

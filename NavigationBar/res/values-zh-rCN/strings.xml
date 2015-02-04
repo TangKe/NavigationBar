@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="navigation_back">返回</string>
+    <string name="navigation_finish">完成</string>
+
+</resources>

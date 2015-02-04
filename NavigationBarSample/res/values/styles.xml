@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="AppBaseTheme" parent="Theme.NavigationBar"></style>
+
+    <style name="AppTheme" parent="AppBaseTheme"></style>
+
+</resources>

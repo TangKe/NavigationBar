@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 是否有导航栏 -->
+    <attr name="windowNavigationBar" format="boolean" />
+    <!-- 导航栏覆盖模式 -->
+    <attr name="navigationBarOverlay" format="boolean" />
+    <!-- 导航栏样式 -->
+    <attr name="navigationBarStyle" format="boolean" />
+    <!-- 导航栏高度 -->
+    <attr name="navigationBarSize" format="dimension" />
+    <!-- 用户检查是否使用了NavigationBar主题 -->
+    <attr name="isNavigationBarTheme" format="boolean" />
+    <!-- 导航按钮的背景样式 -->
+    <attr name="navigationBarItemBackground" format="reference" />
+    <!-- 返回图标 -->
+    <attr name="upIndicator" format="reference" />
+    <!-- 返回文本, 默认为返回-->
+    <attr name="upIndicatorText" format="reference" />
+    <!-- 标题文本样式 -->
+    <attr name="titleTextStyle" format="reference|string" />
+    <!-- 显示选项 -->
+    <attr name="displayOptions">
+        <!-- 显示成点击返回样式 -->
+        <flag name="displayPrimaryNavigationAsUp" value="1" />
+        <!-- 显示自定义View -->
+        <flag name="displayShowCustom" value="2" />
+        <!-- 显示标题 -->
+        <flag name="displayShowTitle" value="4" />
+        <!-- 显示当前Activity图标 -->
+        <flag name="displayShowIcon" value="8" />
+    </attr>
+    <!-- 导航文字样式 -->
+    <attr name="navigationTextStyle" format="reference" />
+    <!-- 导航栏的文本主色 -->
+    <attr name="colorPrimary" format="reference|color" />
+    <!-- 导航按钮样式 -->
+    <attr name="autoStateButtonStyle" format="reference" />
+
+</resources>
