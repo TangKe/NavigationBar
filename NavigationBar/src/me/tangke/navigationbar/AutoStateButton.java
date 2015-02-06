@@ -14,7 +14,7 @@ import android.widget.Button;
  * @author Tank
  * 
  */
-public class AutoStateButton extends Button {
+class AutoStateButton extends Button {
 	private AlphaTransformAnimation mAlphaAnimation = new AlphaTransformAnimation(
 			1.0f);;
 	private float mPressedAlpha;

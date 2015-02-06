@@ -15,6 +15,7 @@
         android:id="@id/navigationBar"
         style="?attr/navigationBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="?attr/navigationBarSize" />
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/navigationBarSize" />
 
 </FrameLayout>

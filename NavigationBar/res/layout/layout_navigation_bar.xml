@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/navigationBarContainer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="?android:attr/windowBackground"
+    android:orientation="vertical" >
 
-    <LinearLayout
+    <me.tangke.navigationbar.NavigationBarView
+        android:id="@id/navigationBar"
+        style="?attr/navigationBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?android:attr/windowBackground"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/navigationBarSize" />
 
-        <me.tangke.navigationbar.NavigationBarView
-            android:id="@id/navigationBar"
-            style="?attr/navigationBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/navigationBarSize" />
+    <FrameLayout
+        android:id="@id/navigationBarContentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:foreground="?android:attr/windowContentOverlay" />
 
-        <FrameLayout
-            android:id="@id/navigationBarContentContainer"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:foreground="?android:attr/windowContentOverlay" />
-    </LinearLayout>
-
-</FrameLayout>
+</LinearLayout>

@@ -9,6 +9,7 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class NavigationBarView extends FrameLayout {
+class NavigationBarView extends FrameLayout {
 	private ViewGroup mNavigationCustomContainer;
 	private Button mPrimaryNavigationButton;
 	private Button mSecondaryNavigationButton;
@@ -122,7 +123,7 @@ public class NavigationBarView extends FrameLayout {
 
 		mNavigationCustomContainer
 				.setVisibility((displayOptions & NavigationBar.DISPLAY_SHOW_CUSTOM) == NavigationBar.DISPLAY_SHOW_CUSTOM ? View.VISIBLE
-						: View.INVISIBLE);
+						: View.GONE);
 	}
 
 	public void setDisplayOptions(int displayOptions) {

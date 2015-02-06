@@ -2,7 +2,6 @@ package me.tangke.navigationbar;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
-import android.net.wifi.p2p.WifiP2pManager.ActionListener;
 import android.view.View;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.SpinnerAdapter;
@@ -120,28 +119,10 @@ public interface NavigationBar {
 	public void setTitle(CharSequence title);
 
 	/**
-	 * 禁用或者启用导航按钮
 	 * 
-	 * @param isEnable
+	 * @param id
 	 */
-	public void setNavigationItemEnable(NavigationBarItem item, boolean isEnable);
-
-	/**
-	 * 选中或者取消选中导航按钮
-	 * 
-	 * @param item
-	 * @param isEnable
-	 */
-	public void setNavigationItemSelected(NavigationBarItem item,
-			boolean isSelected);
-
-	/**
-	 * 判断导航按钮是否选中
-	 * 
-	 * @param item
-	 * @return
-	 */
-	public boolean isNavigationItemSelected(NavigationBarItem item);
+	public NavigationBarItem findNavigationBarItemById(int id);
 
 	/**
 	 * 设置NavigationBar背景
@@ -199,16 +180,6 @@ public interface NavigationBar {
 	 * @return
 	 */
 	public int getDisplayOptions();
-
-	/**
-	 * 导航选项定义
-	 * 
-	 * @author Tank
-	 * 
-	 */
-	public enum NavigationBarItem {
-		PRIMARY_NAVIGATION_ITEM, SECONDARY_NAVIGATION_ITEM;
-	}
 
 	/**
 	 * 导航回调

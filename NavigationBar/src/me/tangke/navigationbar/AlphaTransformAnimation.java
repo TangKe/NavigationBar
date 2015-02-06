@@ -9,7 +9,7 @@ import android.view.animation.Transformation;
  * @author Tank
  * 
  */
-public class AlphaTransformAnimation extends Animation {
+class AlphaTransformAnimation extends Animation {
 	private float mAlpha;
 
 	public AlphaTransformAnimation(float alpha) {
