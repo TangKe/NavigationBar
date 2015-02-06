@@ -309,6 +309,13 @@ abstract class NavigationBarImpl implements NavigationBar, OnClickListener,
 
 	@Override
 	public NavigationBarItem findNavigationBarItemById(int id) {
+		View view = mNavigationBarContainer.findViewById(id);
+		if (null != view) {
+			NavigationBarItem item = new NavigationBarItem();
+			item.id = id;
+			item.view = view;
+			return item;
+		}
 		return null;
 	}
 }
