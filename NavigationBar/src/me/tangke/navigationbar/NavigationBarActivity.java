@@ -1,6 +1,5 @@
 package me.tangke.navigationbar;
 
-import me.tangke.navigationbar.NavigationBarImpl.OnNavigationItemClickListener;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

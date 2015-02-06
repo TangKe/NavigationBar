@@ -8,14 +8,12 @@ import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
-import android.widget.TextView;
 
 /**
  * iPhone风格的{@link NavigationBar}实现
@@ -23,8 +21,8 @@ import android.widget.TextView;
  * @author Tank
  * 
  */
-abstract class NavigationBarImpl implements NavigationBar, OnClickListener,
-		OnItemSelectedListener {
+abstract class NavigationBarImpl implements NavigationBar,
+		OnItemSelectedListener, OnNavigationItemClickListener {
 	private ViewGroup mNavigationBarContainer;
 	private NavigationBarView mNavigationBarView;
 	private ViewGroup mNavigationBarContentContainer;
@@ -71,8 +69,12 @@ abstract class NavigationBarImpl implements NavigationBar, OnClickListener,
 		navigationBarView.setVisibility(mHasNavigationBar ? View.VISIBLE
 				: View.GONE);
 
-		navigationBarView.getPrimaryNavigation().setOnClickListener(this);
-		navigationBarView.getSecondaryNavigation().setOnClickListener(this);
+		navigationBarView.getPrimaryNavigationItem()
+				.setOnNavigationBarItemListener(this);
+		navigationBarView.getTitleNavigationBarItem()
+				.setOnNavigationBarItemListener(this);
+		navigationBarView.getSecondaryNavigationItem()
+				.setOnNavigationBarItemListener(this);
 
 		navigationBarView.getListNavigation().setOnItemSelectedListener(this);
 	}
@@ -142,42 +144,13 @@ abstract class NavigationBarImpl implements NavigationBar, OnClickListener,
 	}
 
 	@Override
-	public void setPrimaryNavigationIcon(int res) {
-		mNavigationBarView.setPrimaryNavigationIcon(res > 0 ? mContext.get()
-				.getResources().getDrawable(res) : null);
-	}
-
-	@Override
-	public void setPrimaryNavigationIcon(Drawable drawable) {
-		mNavigationBarView.setPrimaryNavigationIcon(drawable);
-	}
-
-	@Override
-	public void setPrimaryNavigationText(int res) {
-		mNavigationBarView.setPrimaryNavigationText(res > 0 ? mContext.get()
-				.getText(res) : null);
-	}
-
-	@Override
-	public void setSecondaryNavigationIcon(int res) {
-		mNavigationBarView.setSecondaryNavigationIcon(res > 0 ? mContext.get()
-				.getResources().getDrawable(res) : null);
-	}
-
-	@Override
-	public void setSecondaryNavigationText(int res) {
-		mNavigationBarView.setSecondaryNavigationText(res > 0 ? mContext.get()
-				.getText(res) : null);
-	}
-
-	@Override
 	public void setTitle(int res) {
 		setTitle(res > 0 ? mContext.get().getString(res) : null);
 	}
 
 	@Override
 	public void setTitle(CharSequence title) {
-		mNavigationBarView.setNavigationTitle(title);
+		mNavigationBarView.getTitleNavigationBarItem().setTitle(title);
 	}
 
 	@Override
@@ -187,18 +160,17 @@ abstract class NavigationBarImpl implements NavigationBar, OnClickListener,
 	}
 
 	private void resolveNavigationMode() {
-		TextView navigationTitle = mNavigationBarView.getNavigationTitleView();
+		NavigationBarItem titleNavigationBarItem = mNavigationBarView
+				.getPrimaryNavigationItem();
 		switch (mNavigationMode) {
 		case NAVIGATION_MODE_STANDARD:
-			navigationTitle.setOnClickListener(null);
-			navigationTitle.setText(mDefaultTitle);
-			navigationTitle.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+			titleNavigationBarItem.setTitle(mDefaultTitle);
+			titleNavigationBarItem.setEnabled(false);
 			break;
 		case NAVIGATION_MODE_LIST:
-			navigationTitle.setOnClickListener(this);
-			navigationTitle.setText("");
-			navigationTitle.setCompoundDrawablesWithIntrinsicBounds(0, 0,
-					R.drawable.list_navigation_indicator, 0);
+			titleNavigationBarItem.setTitle("");
+			titleNavigationBarItem.setEnabled(true);
+			// TODO 修复重构后列表导航
 			break;
 		}
 	}
@@ -210,31 +182,12 @@ abstract class NavigationBarImpl implements NavigationBar, OnClickListener,
 	}
 
 	@Override
-	public void onClick(View v) {
-		if (v.getId() == R.id.navigationTitle) {
-			mNavigationBarView.getListNavigation().performClick();
-			return;
-		}
-
-		NavigationBarItem item = new NavigationBarItem();
-		final int id = v.getId();
-		item.id = id;
-		item.view = v;
-		if (id == R.id.primaryNavigationItem) {
-			if ((mNavigationBarView.getDisplayOptions() & NavigationBar.DISPLAY_PRIMARY_NAVIGATION_AS_UP) == NavigationBar.DISPLAY_PRIMARY_NAVIGATION_AS_UP) {
-				onNavigationUp();
-			}
-		}
-		if (null != mOnNavigationItemClickListener) {
-			mOnNavigationItemClickListener.onNavigationItemClick(item);
-		}
-	}
-
-	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
 			long id) {
 		Object object = parent.getItemAtPosition(position);
-		mNavigationBarView.setNavigationTitle(object.toString());
+		NavigationBarItem titleNavigationBarItem = mNavigationBarView
+				.getTitleNavigationBarItem();
+		titleNavigationBarItem.setTitle(object.toString());
 		if (null != mNavigationListener) {
 			mNavigationListener.onNavigationItemSelected(position, id);
 		}
@@ -247,10 +200,6 @@ abstract class NavigationBarImpl implements NavigationBar, OnClickListener,
 
 	void setOnNavigationItemClickListener(OnNavigationItemClickListener listener) {
 		mOnNavigationItemClickListener = listener;
-	}
-
-	public interface OnNavigationItemClickListener {
-		public void onNavigationItemClick(NavigationBarItem item);
 	}
 
 	@Override
@@ -288,13 +237,13 @@ abstract class NavigationBarImpl implements NavigationBar, OnClickListener,
 
 	@Override
 	public void setIcon(int resId) {
-		mNavigationBarView.setNavigationIcon(resId > 0 ? mContext.get()
-				.getResources().getDrawable(resId) : null);
+		setIcon(resId > 0 ? mContext.get().getResources().getDrawable(resId)
+				: null);
 	}
 
 	@Override
 	public void setIcon(Drawable icon) {
-		mNavigationBarView.setNavigationIcon(icon);
+		mNavigationBarView.getTitleNavigationBarItem().setIcon(icon);
 	}
 
 	@Override
@@ -308,14 +257,31 @@ abstract class NavigationBarImpl implements NavigationBar, OnClickListener,
 	}
 
 	@Override
-	public NavigationBarItem findNavigationBarItemById(int id) {
-		View view = mNavigationBarContainer.findViewById(id);
-		if (null != view) {
-			NavigationBarItem item = new NavigationBarItem();
-			item.id = id;
-			item.view = view;
-			return item;
-		}
-		return null;
+	public NavigationBarItem getPrimaryNavigationBarItem() {
+		return mNavigationBarView.getPrimaryNavigationItem();
 	}
+
+	@Override
+	public NavigationBarItem getSecondaryNavigationBarItem() {
+		return mNavigationBarView.getSecondaryNavigationItem();
+	}
+
+	@Override
+	public void onNavigationItemClick(NavigationBarItem item) {
+		final int id = item.id;
+		if (id == R.id.navigationTitle) {
+			mNavigationBarView.getListNavigation().performClick();
+			return;
+		}
+
+		if (id == R.id.primaryNavigationItem) {
+			if ((mNavigationBarView.getDisplayOptions() & NavigationBar.DISPLAY_PRIMARY_NAVIGATION_AS_UP) == NavigationBar.DISPLAY_PRIMARY_NAVIGATION_AS_UP) {
+				onNavigationUp();
+			}
+		}
+		if (null != mOnNavigationItemClickListener) {
+			mOnNavigationItemClickListener.onNavigationItemClick(item);
+		}
+	}
+
 }

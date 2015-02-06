@@ -43,6 +43,20 @@ public interface NavigationBar {
 	public void hide();
 
 	/**
+	 * 获取左侧导航按钮
+	 * 
+	 * @return
+	 */
+	public NavigationBarItem getPrimaryNavigationBarItem();
+
+	/**
+	 * 获取右侧导航按钮
+	 * 
+	 * @return
+	 */
+	public NavigationBarItem getSecondaryNavigationBarItem();
+
+	/**
 	 * 设置导航模式
 	 * 
 	 * @see {@link #NAVIGATION_MODE_LIST}, {@link #NAVIGATION_MODE_STANDARD}
@@ -70,41 +84,6 @@ public interface NavigationBar {
 			int selectedPosition, OnNavigationListener listener);
 
 	/**
-	 * 设置左侧导航按钮图标
-	 * 
-	 * @param res
-	 */
-	public void setPrimaryNavigationIcon(int res);
-
-	/**
-	 * 设置左侧导航按钮图标
-	 * 
-	 * @param drawable
-	 */
-	public void setPrimaryNavigationIcon(Drawable drawable);
-
-	/**
-	 * 设置左侧导航按钮文字
-	 * 
-	 * @param res
-	 */
-	public void setPrimaryNavigationText(int res);
-
-	/**
-	 * 设置右侧导航按钮图标
-	 * 
-	 * @param res
-	 */
-	public void setSecondaryNavigationIcon(int res);
-
-	/**
-	 * 设置右侧导航按钮文字
-	 * 
-	 * @param res
-	 */
-	public void setSecondaryNavigationText(int res);
-
-	/**
 	 * 设置标题, 默认会读取当前{@link Activity}的标题
 	 * 
 	 * @param res
@@ -117,12 +96,6 @@ public interface NavigationBar {
 	 * @param title
 	 */
 	public void setTitle(CharSequence title);
-
-	/**
-	 * 
-	 * @param id
-	 */
-	public NavigationBarItem findNavigationBarItemById(int id);
 
 	/**
 	 * 设置NavigationBar背景
