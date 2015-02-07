@@ -5,6 +5,7 @@ import java.util.Arrays;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
@@ -56,5 +57,15 @@ class AutoStateButton extends Button {
 			parent.invalidate();
 		}
 		return state;
+	}
+	
+	@Override
+	public void setVisibility(int visibility) {
+		super.setVisibility(visibility);
+		if(visibility == View.VISIBLE){
+			setAnimation(mAlphaAnimation);
+		}else{
+			clearAnimation();
+		}
 	}
 }

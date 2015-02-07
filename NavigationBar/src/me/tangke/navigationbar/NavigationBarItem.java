@@ -61,6 +61,7 @@ public class NavigationBarItem implements OnClickListener {
 						Mode.SRC_IN);
 			}
 		}
+		applyVisibility();
 	}
 
 	public int getId() {
@@ -76,7 +77,7 @@ public class NavigationBarItem implements OnClickListener {
 	}
 
 	public void setIcon(int res) {
-		setIcon(mContext.get().getResources().getDrawable(res));
+		setIcon(0 < res ? mContext.get().getResources().getDrawable(res) : null);
 	}
 
 	public void setIcon(Drawable icon) {
@@ -116,6 +117,7 @@ public class NavigationBarItem implements OnClickListener {
 		if (null != callback && null != callback.get()) {
 			callback.get().onIconChanged(this, icon);
 		}
+		applyVisibility();
 	}
 
 	public CharSequence getTitle() {
@@ -123,16 +125,17 @@ public class NavigationBarItem implements OnClickListener {
 	}
 
 	public void setTitle(int res) {
-		setTitle(mContext.get().getText(res));
+		setTitle(0 < res ? mContext.get().getText(res) : null);
 	}
 
 	public void setTitle(CharSequence title) {
 		this.title = title;
 		view.setText(title);
+		applyVisibility();
 	}
 
 	public void setVisible(boolean visible) {
-		view.setVisibility(visible ? View.VISIBLE : View.GONE);
+		view.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
 	}
 
 	public boolean isVisible() {
@@ -152,6 +155,10 @@ public class NavigationBarItem implements OnClickListener {
 		if (null != onNavigationItemClickListener) {
 			onNavigationItemClickListener.onNavigationItemClick(this);
 		}
+	}
+
+	private void applyVisibility() {
+		setVisible(null != title || null != icon);
 	}
 
 	void setOnNavigationBarItemListener(OnNavigationItemClickListener listener) {
