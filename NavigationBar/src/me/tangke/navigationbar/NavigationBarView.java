@@ -83,16 +83,17 @@ class NavigationBarView extends FrameLayout implements Callback {
 		mPrimaryNavigationBarItem = new NavigationBarItem(context,
 				R.id.primaryNavigationItem,
 				(TextView) findViewById(R.id.primaryNavigationItem),
-				Gravity.LEFT);
+				Gravity.LEFT, "left");
 		mPrimaryNavigationBarItem.setCallback(this);
 		mSecondaryNavigationBarItem = new NavigationBarItem(context,
 				R.id.secondaryNavigationItem,
 				(TextView) findViewById(R.id.secondaryNavigationItem),
-				Gravity.RIGHT);
+				Gravity.RIGHT, "right");
 		mSecondaryNavigationBarItem.setCallback(this);
 		mTitleNavigationBarItem = new NavigationBarItem(context,
 				R.id.navigationTitle,
-				(TextView) findViewById(R.id.navigationTitle), Gravity.LEFT);
+				(TextView) findViewById(R.id.navigationTitle), Gravity.LEFT,
+				"test");
 		mTitleNavigationBarItem.setCallback(this);
 
 		mListNavigation = (Spinner) findViewById(R.id.listNavigation);
@@ -110,7 +111,7 @@ class NavigationBarView extends FrameLayout implements Callback {
 
 	private void applyDisplayOptions() {
 		final int displayOptions = mDisplayOptions;
-		boolean isPrimaryNavigationAsUp = (displayOptions & NavigationBar.DISPLAY_PRIMARY_NAVIGATION_AS_UP) == NavigationBar.DISPLAY_PRIMARY_NAVIGATION_AS_UP;
+		boolean isPrimaryNavigationAsUp = isPrimaryNavigationAsUp();
 		mPrimaryNavigationBarItem
 				.setIcon(isPrimaryNavigationAsUp ? mUpIndicator
 						: mPrimaryNavigationIcon);
@@ -126,6 +127,10 @@ class NavigationBarView extends FrameLayout implements Callback {
 		mNavigationCustomContainer
 				.setVisibility((displayOptions & NavigationBar.DISPLAY_SHOW_CUSTOM) == NavigationBar.DISPLAY_SHOW_CUSTOM ? View.VISIBLE
 						: View.GONE);
+	}
+
+	private boolean isPrimaryNavigationAsUp() {
+		return (mDisplayOptions & NavigationBar.DISPLAY_PRIMARY_NAVIGATION_AS_UP) == NavigationBar.DISPLAY_PRIMARY_NAVIGATION_AS_UP;
 	}
 
 	public NavigationBarItem getPrimaryNavigationItem() {
@@ -152,11 +157,12 @@ class NavigationBarView extends FrameLayout implements Callback {
 	@Override
 	public void onIconChanged(NavigationBarItem item, Drawable icon) {
 		if (item == mPrimaryNavigationBarItem) {
-			mPrimaryNavigationIcon = icon;
+			mPrimaryNavigationIcon = mUpIndicator == icon ? mPrimaryNavigationIcon
+					: icon;
 		} else if (item == mTitleNavigationBarItem) {
 			mNavigationIcon = icon;
 		}
-//		applyDisplayOptions();
-	}
 
+		applyDisplayOptions();
+	}
 }

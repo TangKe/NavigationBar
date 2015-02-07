@@ -36,11 +36,14 @@ public class NavigationBarItem implements OnClickListener {
 	WeakReference<Callback> callback;
 
 	private WeakReference<Context> mContext;
+	private String tag;
 
-	NavigationBarItem(Context context, int id, TextView view, int gravity) {
+	NavigationBarItem(Context context, int id, TextView view, int gravity,
+			String tag) {
 		this.id = id;
 		this.view = view;
 		this.gravity = gravity;
+		this.tag = tag;
 		view.setOnClickListener(this);
 		this.mContext = new WeakReference<Context>(context);
 
@@ -73,10 +76,14 @@ public class NavigationBarItem implements OnClickListener {
 	}
 
 	public void setIcon(int res) {
-		mContext.get().getResources().getDrawable(res);
+		setIcon(mContext.get().getResources().getDrawable(res));
 	}
 
 	public void setIcon(Drawable icon) {
+		if (this.icon == icon) {
+			return;
+		}
+
 		if (null != this.icon) {
 			this.icon.setColorFilter(null);
 		}
