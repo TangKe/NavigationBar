@@ -9,6 +9,7 @@ import android.graphics.ColorFilter;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -22,7 +23,7 @@ import android.widget.TextView;
  * 
  */
 public class NavigationBarItem implements OnClickListener {
-	private static ColorFilter sColorFilter;
+	private ColorFilter sColorFilter;
 
 	int id;
 	TextView view;
@@ -47,19 +48,16 @@ public class NavigationBarItem implements OnClickListener {
 		view.setOnClickListener(this);
 		this.mContext = new WeakReference<Context>(context);
 
-		if (null == sColorFilter) {
-			final Theme theme = context.getTheme();
-			final Resources resources = context.getResources();
-			TypedValue value = new TypedValue();
+		final Theme theme = context.getTheme();
+		final Resources resources = context.getResources();
+		TypedValue value = new TypedValue();
 
-			theme.resolveAttribute(R.attr.colorPrimary, value, true);
-			if (TypedValue.TYPE_REFERENCE == value.type) {
-				sColorFilter = new PorterDuffColorFilter(
-						resources.getColor(value.resourceId), Mode.SRC_IN);
-			} else {
-				sColorFilter = new PorterDuffColorFilter(value.data,
-						Mode.SRC_IN);
-			}
+		theme.resolveAttribute(R.attr.colorPrimary, value, true);
+		if (TypedValue.TYPE_REFERENCE == value.type) {
+			sColorFilter = new PorterDuffColorFilter(
+					resources.getColor(value.resourceId), Mode.SRC_IN);
+		} else {
+			sColorFilter = new PorterDuffColorFilter(value.data, Mode.SRC_IN);
 		}
 		applyVisibility();
 	}
