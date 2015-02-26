@@ -4,6 +4,8 @@ import java.lang.ref.WeakReference;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -35,8 +37,13 @@ class NavigationBarActivityImpl extends NavigationBarImpl {
 	public Drawable getDefaultIcon() {
 		final Activity activity = mActivity.get();
 		try {
-			return activity.getPackageManager().getActivityIcon(
-					activity.getComponentName());
+			final PackageManager packageManager = activity.getPackageManager();
+			ActivityInfo activityInfo = packageManager.getActivityInfo(
+					activity.getComponentName(), 0);
+			if (activityInfo.icon > 0) {
+				return activity.getResources().getDrawable(activityInfo.icon);
+			}
+			return activityInfo.loadIcon(packageManager);
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -73,6 +80,9 @@ class NavigationBarActivityImpl extends NavigationBarImpl {
 
 	@Override
 	void setContentView(View view, LayoutParams params) {
+		if (null == view) {
+			return;
+		}
 		params = null == params ? new FrameLayout.LayoutParams(
 				FrameLayout.LayoutParams.MATCH_PARENT,
 				FrameLayout.LayoutParams.MATCH_PARENT) : params;
