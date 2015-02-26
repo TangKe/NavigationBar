@@ -22,7 +22,6 @@ public class NavigationBarFragment extends Fragment implements
 				this);
 		mNavigationBar.onCreate();
 		navigationBar.setOnNavigationItemClickListener(this);
-		navigationBar.setDisplayOptions(NavigationBarImpl.DISPLAY_SHOW_TITLE);
 	}
 
 	@Override
@@ -40,6 +39,16 @@ public class NavigationBarFragment extends Fragment implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			ViewGroup navigationBar, Bundle savedInstanceState) {
 		return null;
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		ViewGroup parent = (ViewGroup) mNavigationBar
+				.getNavigationBarContainerView().getParent();
+		if (null != parent) {
+			parent.removeView(mNavigationBar.getNavigationBarContainerView());
+		}
 	}
 
 	public NavigationBar getNavigationBar() {
