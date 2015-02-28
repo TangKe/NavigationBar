@@ -7,11 +7,13 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 /**
@@ -26,6 +28,22 @@ class NavigationBarActivityImpl extends NavigationBarImpl {
 	public NavigationBarActivityImpl(Activity activity) {
 		super(activity);
 		mActivity = new WeakReference<Activity>(activity);
+	}
+
+	@Override
+	public void onContentChanged() {
+		super.onContentChanged();
+		final Activity activity = mActivity.get();
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
+				&& (activity.getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) == WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) {
+			final Resources resources = activity.getResources();
+			int identifier = resources.getIdentifier("status_bar_height",
+					"dimen", "android");
+			if (0 < identifier) {
+				getNavigationBarView().setPadding(0,
+						resources.getDimensionPixelSize(identifier), 0, 0);
+			}
+		}
 	}
 
 	@Override

@@ -25,6 +25,16 @@ public abstract class NavigationBarActivity extends FragmentActivity implements
 		mNavigationBarImpl = navigationBar;
 	}
 
+	@Override
+	public final void onContentChanged() {
+		mNavigationBarImpl.onContentChanged();
+		onSupportContentChanged();
+	}
+
+	public void onSupportContentChanged() {
+
+	}
+
 	/**
 	 * 获取{@link NavigationBar}, 如果theme中设置了无{@link NavigationBar}, 则返回null
 	 * 

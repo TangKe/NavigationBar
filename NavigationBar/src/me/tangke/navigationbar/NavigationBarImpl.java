@@ -107,6 +107,9 @@ abstract class NavigationBarImpl implements NavigationBar,
 				mNavigationBarContentContainer);
 	}
 
+	public void onContentChanged() {
+	}
+
 	public abstract CharSequence getDefaultTitle();
 
 	public abstract Drawable getDefaultIcon();
