@@ -9,7 +9,6 @@ import android.graphics.ColorFilter;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -59,7 +58,6 @@ public class NavigationBarItem implements OnClickListener {
 		} else {
 			sColorFilter = new PorterDuffColorFilter(value.data, Mode.SRC_IN);
 		}
-		applyVisibility();
 	}
 
 	public int getId() {
@@ -115,7 +113,6 @@ public class NavigationBarItem implements OnClickListener {
 		if (null != callback && null != callback.get()) {
 			callback.get().onIconChanged(this, icon);
 		}
-		applyVisibility();
 	}
 
 	public CharSequence getTitle() {
@@ -129,7 +126,6 @@ public class NavigationBarItem implements OnClickListener {
 	public void setTitle(CharSequence title) {
 		this.title = title;
 		view.setText(title);
-		applyVisibility();
 	}
 
 	public void setVisible(boolean visible) {
@@ -153,10 +149,6 @@ public class NavigationBarItem implements OnClickListener {
 		if (null != onNavigationItemClickListener) {
 			onNavigationItemClickListener.onNavigationItemClick(this);
 		}
-	}
-
-	private void applyVisibility() {
-		setVisible(null != title || null != icon);
 	}
 
 	void setOnNavigationBarItemListener(OnNavigationItemClickListener listener) {
