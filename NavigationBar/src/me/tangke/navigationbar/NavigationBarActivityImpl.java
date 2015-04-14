@@ -91,7 +91,7 @@ class NavigationBarActivityImpl extends NavigationBarImpl {
 	protected void onNavigationUp() {
 		final Activity activity = mActivity.get();
 		if (Build.VERSION_CODES.JELLY_BEAN <= Build.VERSION.SDK_INT) {
-			if (activity.onNavigateUp()) {
+			if (!activity.onNavigateUp()) {
 				activity.finish();
 			}
 		} else {
