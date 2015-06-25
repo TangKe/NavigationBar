@@ -1,6 +1,5 @@
 package me.tangke.navigationbar;
 
-import me.tangke.navigationbar.NavigationBarItem.Callback;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.Resources.Theme;
@@ -16,7 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-class NavigationBarView extends FrameLayout implements Callback {
+class NavigationBarView extends FrameLayout {
 	private ViewGroup mNavigationCustomContainer;
 
 	private Spinner mListNavigation;
@@ -25,17 +24,17 @@ class NavigationBarView extends FrameLayout implements Callback {
 	private Drawable mUpIndicator;
 	private CharSequence mUpIndicatorText;
 	private CharSequence mPrimaryNavigationText;
-	private Drawable mPrimaryNavigationIcon;
-	private Drawable mNavigationIcon;
 
-	private NavigationBarItem mPrimaryNavigationBarItem;
-	private NavigationBarItem mTitleNavigationBarItem;
-	private NavigationBarItem mSecondaryNavigationBarItem;
+	private NavigationBarItemGroup mPrimaryNavigationBarItem;
+	private NavigationBarTitle mTitleNavigationBarItem;
+	private NavigationBarItemGroup mSecondaryNavigationBarItem;
+	private NavigationBarButton mUpNavigationBarItem;
+
+	private int mNavigationTextAppearance;
 
 	public NavigationBarView(Context context, AttributeSet attrs,
 			int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
-		prepareNavigationBarContent();
 
 		final Theme theme = context.getTheme();
 		final Resources resources = context.getResources();
@@ -52,19 +51,20 @@ class NavigationBarView extends FrameLayout implements Callback {
 		TypedArray a = context.obtainStyledAttributes(attrs,
 				R.styleable.NavigationBar, defStyleAttr,
 				R.style.Widget_NavigationBar);
-		mTitleNavigationBarItem.view.setTextAppearance(context, a
-				.getResourceId(R.styleable.NavigationBar_titleTextStyle,
-						R.style.TextAppearance_NavigationBar_Title));
-		int navigationTextAppearance = a.getResourceId(
+
+		mNavigationTextAppearance = a.getResourceId(
 				R.styleable.NavigationBar_navigationTextStyle,
 				R.style.TextAppearance_NavigationBar_Navigation);
-		mPrimaryNavigationBarItem.view.setTextAppearance(context,
-				navigationTextAppearance);
-		mSecondaryNavigationBarItem.view.setTextAppearance(context,
-				navigationTextAppearance);
+
+		prepareNavigationBarContent();
+
+		mTitleNavigationBarItem.text.setTextAppearance(context, a
+				.getResourceId(R.styleable.NavigationBar_titleTextStyle,
+						R.style.TextAppearance_NavigationBar_Title));
 		mDisplayOptions = a.getInteger(
 				R.styleable.NavigationBar_displayOptions,
 				NavigationBar.DISPLAY_SHOW_TITLE);
+
 		a.recycle();
 	}
 
@@ -78,26 +78,34 @@ class NavigationBarView extends FrameLayout implements Callback {
 
 	private void prepareNavigationBarContent() {
 		final Context context = getContext();
-		LayoutInflater.from(context).inflate(
-				R.layout.layout_navigation_bar_content, this);
-		mPrimaryNavigationBarItem = new NavigationBarItem(context,
-				R.id.primaryNavigationItem,
-				(TextView) findViewById(R.id.primaryNavigationItem),
-				Gravity.LEFT, "left");
-		mPrimaryNavigationBarItem.setCallback(this);
-		mSecondaryNavigationBarItem = new NavigationBarItem(context,
-				R.id.secondaryNavigationItem,
-				(TextView) findViewById(R.id.secondaryNavigationItem),
-				Gravity.RIGHT, "right");
-		mSecondaryNavigationBarItem.setCallback(this);
-		mTitleNavigationBarItem = new NavigationBarItem(context,
+		final LayoutInflater inflater = LayoutInflater.from(context);
+		inflater.inflate(R.layout.layout_navigation_bar_content, this);
+		ViewGroup primaryNavigationItemContainer = (ViewGroup) findViewById(R.id.primaryNavigationItemContainer);
+		mPrimaryNavigationBarItem = new NavigationBarItemGroup(context,
+				R.id.primaryNavigationItemContainer,
+				primaryNavigationItemContainer, Gravity.LEFT, "left");
+		mSecondaryNavigationBarItem = new NavigationBarItemGroup(
+				context,
+				R.id.secondaryNavigationItemContainer,
+				(ViewGroup) findViewById(R.id.secondaryNavigationItemContainer),
+				Gravity.END, "right");
+		mTitleNavigationBarItem = new NavigationBarTitle(context,
 				R.id.navigationTitle,
 				(TextView) findViewById(R.id.navigationTitle), Gravity.LEFT,
-				"test");
-		mTitleNavigationBarItem.setCallback(this);
+				"title");
 
 		mListNavigation = (Spinner) findViewById(R.id.listNavigation);
 		mNavigationCustomContainer = (ViewGroup) findViewById(R.id.navigationCustomContainer);
+
+		mUpNavigationBarItem = new NavigationBarButton(context,
+				R.id.upNavigationItem, (TextView) inflater.inflate(
+						R.layout.layout_navigation_bar_item,
+						primaryNavigationItemContainer, false), Gravity.LEFT,
+				"up");
+		mUpNavigationBarItem.setIcon(mUpIndicator);
+		mUpNavigationBarItem.text.setTextAppearance(context,
+				mNavigationTextAppearance);
+		mUpNavigationBarItem.setTitle(mPrimaryNavigationText);
 	}
 
 	public void setDisplayOptions(int displayOptions) {
@@ -112,15 +120,13 @@ class NavigationBarView extends FrameLayout implements Callback {
 	private void applyDisplayOptions() {
 		final int displayOptions = mDisplayOptions;
 		boolean isPrimaryNavigationAsUp = isPrimaryNavigationAsUp();
-		mPrimaryNavigationBarItem
-				.setIcon(isPrimaryNavigationAsUp ? mUpIndicator
-						: mPrimaryNavigationIcon);
-		mPrimaryNavigationBarItem
-				.setTitle(isPrimaryNavigationAsUp ? mUpIndicatorText
-						: mPrimaryNavigationText);
-		mTitleNavigationBarItem
-				.setIcon((displayOptions & NavigationBar.DISPLAY_SHOW_ICON) == NavigationBar.DISPLAY_SHOW_ICON ? mNavigationIcon
-						: null);
+		if (isPrimaryNavigationAsUp) {
+			mPrimaryNavigationBarItem.addNavigationBarItem(
+					mUpNavigationBarItem, 0);
+		} else {
+			mPrimaryNavigationBarItem
+					.removeNavigationBarItem(mUpNavigationBarItem);
+		}
 		mTitleNavigationBarItem
 				.setVisible((displayOptions & NavigationBar.DISPLAY_SHOW_TITLE) == NavigationBar.DISPLAY_SHOW_TITLE);
 
@@ -133,12 +139,16 @@ class NavigationBarView extends FrameLayout implements Callback {
 		return (mDisplayOptions & NavigationBar.DISPLAY_PRIMARY_NAVIGATION_AS_UP) == NavigationBar.DISPLAY_PRIMARY_NAVIGATION_AS_UP;
 	}
 
-	public NavigationBarItem getPrimaryNavigationItem() {
+	public NavigationBarItemGroup getPrimaryNavigationItemGroup() {
 		return mPrimaryNavigationBarItem;
 	}
 
-	public NavigationBarItem getSecondaryNavigationItem() {
+	public NavigationBarItemGroup getSecondaryNavigationItemGroup() {
 		return mSecondaryNavigationBarItem;
+	}
+
+	public NavigationBarItem getUpNavigationBarItem() {
+		return mUpNavigationBarItem;
 	}
 
 	public NavigationBarItem getTitleNavigationBarItem() {
@@ -154,15 +164,16 @@ class NavigationBarView extends FrameLayout implements Callback {
 		mNavigationCustomContainer.addView(view, layoutParams);
 	}
 
-	@Override
-	public void onIconChanged(NavigationBarItem item, Drawable icon) {
-		if (item == mPrimaryNavigationBarItem) {
-			mPrimaryNavigationIcon = mUpIndicator == icon ? mPrimaryNavigationIcon
-					: icon;
-		} else if (item == mTitleNavigationBarItem) {
-			mNavigationIcon = icon;
-		}
-
-		applyDisplayOptions();
+	public NavigationBarItem newNavigationBarItem(int id, CharSequence title,
+			int icon, int gravity, String tag) {
+		final Context context = getContext();
+		NavigationBarButton item = new NavigationBarButton(context, id,
+				(TextView) LayoutInflater.from(context).inflate(
+						R.layout.layout_navigation_bar_item, null), gravity,
+				tag);
+		item.text.setTextAppearance(context, mNavigationTextAppearance);
+		item.setIcon(icon);
+		item.setTitle(title);
+		return item;
 	}
 }

@@ -30,7 +30,6 @@ public interface NavigationBar {
 	public final static int DISPLAY_PRIMARY_NAVIGATION_AS_UP = 1 << 0;
 	public final static int DISPLAY_SHOW_CUSTOM = 1 << 1;
 	public final static int DISPLAY_SHOW_TITLE = 1 << 2;
-	public final static int DISPLAY_SHOW_ICON = 1 << 3;
 
 	/**
 	 * 显示{@link NavigationBar}
@@ -47,14 +46,14 @@ public interface NavigationBar {
 	 * 
 	 * @return
 	 */
-	public NavigationBarItem getPrimaryNavigationBarItem();
+	public NavigationBarItemGroup getPrimaryNavigationBarItemGroup();
 
 	/**
 	 * 获取右侧导航按钮
 	 * 
 	 * @return
 	 */
-	public NavigationBarItem getSecondaryNavigationBarItem();
+	public NavigationBarItemGroup getSecondaryNavigationBarItemGroup();
 
 	/**
 	 * 设置导航模式
@@ -153,6 +152,19 @@ public interface NavigationBar {
 	 * @return
 	 */
 	public int getDisplayOptions();
+
+	/**
+	 * 生成新的{@link NavigationBarItem}
+	 * 
+	 * @param id
+	 * @param title
+	 * @param icon
+	 * @param gravity
+	 * @param tag
+	 * @return
+	 */
+	public NavigationBarItem newNavigationBarItem(int id, CharSequence title,
+			int icon, int gravity, String tag);
 
 	/**
 	 * 导航回调

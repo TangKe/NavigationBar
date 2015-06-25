@@ -13,7 +13,6 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.TextView;
 
 /**
  * 导航选项定义
@@ -21,11 +20,10 @@ import android.widget.TextView;
  * @author Tank
  * 
  */
-public class NavigationBarItem implements OnClickListener {
-	private ColorFilter sColorFilter;
+public abstract class NavigationBarItem implements OnClickListener {
 
 	int id;
-	TextView view;
+	View view;
 
 	CharSequence title;
 	Drawable icon;
@@ -33,12 +31,11 @@ public class NavigationBarItem implements OnClickListener {
 	int gravity;
 
 	OnNavigationItemClickListener onNavigationItemClickListener;
-	WeakReference<Callback> callback;
 
 	private WeakReference<Context> mContext;
 	private String tag;
 
-	NavigationBarItem(Context context, int id, TextView view, int gravity,
+	NavigationBarItem(Context context, int id, View view, int gravity,
 			String tag) {
 		this.id = id;
 		this.view = view;
@@ -46,18 +43,6 @@ public class NavigationBarItem implements OnClickListener {
 		this.tag = tag;
 		view.setOnClickListener(this);
 		this.mContext = new WeakReference<Context>(context);
-
-		final Theme theme = context.getTheme();
-		final Resources resources = context.getResources();
-		TypedValue value = new TypedValue();
-
-		theme.resolveAttribute(R.attr.colorPrimary, value, true);
-		if (TypedValue.TYPE_REFERENCE == value.type) {
-			sColorFilter = new PorterDuffColorFilter(
-					resources.getColor(value.resourceId), Mode.SRC_IN);
-		} else {
-			sColorFilter = new PorterDuffColorFilter(value.data, Mode.SRC_IN);
-		}
 	}
 
 	public int getId() {
@@ -76,44 +61,7 @@ public class NavigationBarItem implements OnClickListener {
 		setIcon(0 < res ? mContext.get().getResources().getDrawable(res) : null);
 	}
 
-	public void setIcon(Drawable icon) {
-		if (this.icon == icon) {
-			return;
-		}
-
-		if (null != this.icon) {
-			this.icon.setColorFilter(null);
-		}
-		this.icon = icon;
-
-		if (null != icon) {
-			icon.setColorFilter(sColorFilter);
-		}
-
-		Drawable left = null, right = null, top = null, bottom = null;
-		switch (gravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
-		case Gravity.LEFT:
-			left = icon;
-			break;
-		case Gravity.RIGHT:
-			right = icon;
-			break;
-		}
-
-		switch (gravity & Gravity.VERTICAL_GRAVITY_MASK) {
-		case Gravity.TOP:
-			top = icon;
-			break;
-		case Gravity.BOTTOM:
-			bottom = icon;
-			break;
-		}
-
-		view.setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom);
-		if (null != callback && null != callback.get()) {
-			callback.get().onIconChanged(this, icon);
-		}
-	}
+	public abstract void setIcon(Drawable icon);
 
 	public CharSequence getTitle() {
 		return title;
@@ -125,7 +73,6 @@ public class NavigationBarItem implements OnClickListener {
 
 	public void setTitle(CharSequence title) {
 		this.title = title;
-		view.setText(title);
 	}
 
 	public void setVisible(boolean visible) {
@@ -155,11 +102,4 @@ public class NavigationBarItem implements OnClickListener {
 		this.onNavigationItemClickListener = listener;
 	}
 
-	void setCallback(Callback callback) {
-		this.callback = new WeakReference<NavigationBarItem.Callback>(callback);
-	}
-
-	interface Callback {
-		public void onIconChanged(NavigationBarItem item, Drawable icon);
-	}
 }

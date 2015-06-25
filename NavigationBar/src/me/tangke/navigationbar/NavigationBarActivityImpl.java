@@ -4,6 +4,7 @@ import java.lang.ref.WeakReference;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -31,8 +32,13 @@ class NavigationBarActivityImpl extends NavigationBarImpl {
 	}
 
 	@Override
-	public void onContentChanged() {
-		super.onContentChanged();
+	public CharSequence getDefaultTitle() {
+		return mActivity.get().getTitle();
+	}
+
+	@Override
+	public void onCreate() {
+		super.onCreate();
 		final Activity activity = mActivity.get();
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
 				&& (activity.getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) == WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) {
@@ -44,11 +50,6 @@ class NavigationBarActivityImpl extends NavigationBarImpl {
 						resources.getDimensionPixelSize(identifier), 0, 0);
 			}
 		}
-	}
-
-	@Override
-	public CharSequence getDefaultTitle() {
-		return mActivity.get().getTitle();
 	}
 
 	@Override

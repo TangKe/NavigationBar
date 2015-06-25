@@ -2,16 +2,13 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:navigationbar="http://schemas.android.com/apk/res-auto" >
 
-    <me.tangke.navigationbar.AutoStateButton
-        android:id="@id/primaryNavigationItem"
+    <LinearLayout
+        android:id="@id/primaryNavigationItemContainer"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="?attr/navigationBarItemBackground"
-        android:drawablePadding="5dp"
-        android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp" />
+        android:gravity="start"
+        android:orientation="horizontal" />
 
     <Spinner
         android:id="@id/listNavigation"
@@ -32,16 +29,13 @@
         android:drawablePadding="5dp"
         android:gravity="center" />
 
-    <me.tangke.navigationbar.AutoStateButton
-        android:id="@id/secondaryNavigationItem"
+    <LinearLayout
+        android:id="@id/secondaryNavigationItemContainer"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        android:background="?attr/navigationBarItemBackground"
-        android:drawablePadding="5dp"
-        android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp" />
+        android:gravity="end"
+        android:orientation="horizontal" />
 
     <FrameLayout
         android:id="@+id/navigationCustomContainer"

@@ -69,11 +69,13 @@ abstract class NavigationBarImpl implements NavigationBar,
 		navigationBarView.setVisibility(mHasNavigationBar ? View.VISIBLE
 				: View.GONE);
 
-		navigationBarView.getPrimaryNavigationItem()
+		navigationBarView.getPrimaryNavigationItemGroup()
 				.setOnNavigationBarItemListener(this);
 		navigationBarView.getTitleNavigationBarItem()
 				.setOnNavigationBarItemListener(this);
-		navigationBarView.getSecondaryNavigationItem()
+		navigationBarView.getSecondaryNavigationItemGroup()
+				.setOnNavigationBarItemListener(this);
+		navigationBarView.getUpNavigationBarItem()
 				.setOnNavigationBarItemListener(this);
 
 		navigationBarView.getListNavigation().setOnItemSelectedListener(this);
@@ -105,9 +107,6 @@ abstract class NavigationBarImpl implements NavigationBar,
 		setIcon(mDefaultIcon);
 		onReplaceContentView(mNavigationBarContainer,
 				mNavigationBarContentContainer);
-	}
-
-	public void onContentChanged() {
 	}
 
 	public abstract CharSequence getDefaultTitle();
@@ -164,7 +163,7 @@ abstract class NavigationBarImpl implements NavigationBar,
 
 	private void resolveNavigationMode() {
 		NavigationBarItem titleNavigationBarItem = mNavigationBarView
-				.getPrimaryNavigationItem();
+				.getPrimaryNavigationItemGroup();
 		switch (mNavigationMode) {
 		case NAVIGATION_MODE_STANDARD:
 			titleNavigationBarItem.setTitle(mDefaultTitle);
@@ -227,7 +226,7 @@ abstract class NavigationBarImpl implements NavigationBar,
 
 	@Override
 	public void setCustomView(View view) {
-		setCustomView(view, null);
+		setCustomView(view, (LayoutParams) view.getLayoutParams());
 	}
 
 	@Override
@@ -260,13 +259,13 @@ abstract class NavigationBarImpl implements NavigationBar,
 	}
 
 	@Override
-	public NavigationBarItem getPrimaryNavigationBarItem() {
-		return mNavigationBarView.getPrimaryNavigationItem();
+	public NavigationBarItemGroup getPrimaryNavigationBarItemGroup() {
+		return mNavigationBarView.getPrimaryNavigationItemGroup();
 	}
 
 	@Override
-	public NavigationBarItem getSecondaryNavigationBarItem() {
-		return mNavigationBarView.getSecondaryNavigationItem();
+	public NavigationBarItemGroup getSecondaryNavigationBarItemGroup() {
+		return mNavigationBarView.getSecondaryNavigationItemGroup();
 	}
 
 	@Override
@@ -277,14 +276,18 @@ abstract class NavigationBarImpl implements NavigationBar,
 			return;
 		}
 
-		if (id == R.id.primaryNavigationItem) {
-			if ((mNavigationBarView.getDisplayOptions() & NavigationBar.DISPLAY_PRIMARY_NAVIGATION_AS_UP) == NavigationBar.DISPLAY_PRIMARY_NAVIGATION_AS_UP) {
-				onNavigationUp();
-			}
+		if (item.id == R.id.upNavigationItem) {
+			onNavigationUp();
 		}
 		if (null != mOnNavigationItemClickListener) {
 			mOnNavigationItemClickListener.onNavigationItemClick(item);
 		}
 	}
 
+	@Override
+	public NavigationBarItem newNavigationBarItem(int id, CharSequence title,
+			int icon, int gravity, String tag) {
+		return mNavigationBarView.newNavigationBarItem(id, title, icon,
+				gravity, tag);
+	}
 }

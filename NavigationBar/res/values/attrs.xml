@@ -15,7 +15,7 @@
     <attr name="navigationBarItemBackground" format="reference" />
     <!-- 返回图标 -->
     <attr name="upIndicator" format="reference" />
-    <!-- 返回文本, 默认为返回-->
+    <!-- 返回文本, 默认为返回 -->
     <attr name="upIndicatorText" format="reference" />
     <!-- 标题文本样式 -->
     <attr name="titleTextStyle" format="reference|string" />
@@ -27,8 +27,6 @@
         <flag name="displayShowCustom" value="2" />
         <!-- 显示标题 -->
         <flag name="displayShowTitle" value="4" />
-        <!-- 显示当前Activity图标 -->
-        <flag name="displayShowIcon" value="8" />
     </attr>
     <!-- 导航文字样式 -->
     <attr name="navigationTextStyle" format="reference" />
