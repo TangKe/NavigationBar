@@ -36,6 +36,7 @@ public class NavigationBarItemGroup extends NavigationBarItem implements
 		index = Math.max(0, Math.min(index, getNavigationBarItemCount()));
 		mNavigationBarItems.add(item);
 		group.addView(item.view, index);
+		item.setOnNavigationBarItemListener(onNavigationItemClickListener);
 	}
 
 	@Override
@@ -45,6 +46,7 @@ public class NavigationBarItemGroup extends NavigationBarItem implements
 		}
 		NavigationBarItem item = mNavigationBarItems.remove(index);
 		group.removeView(item.view);
+		item.setOnNavigationBarItemListener(null);
 	}
 
 	@Override
