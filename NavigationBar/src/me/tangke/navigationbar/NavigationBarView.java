@@ -83,16 +83,15 @@ class NavigationBarView extends FrameLayout {
 		ViewGroup primaryNavigationItemContainer = (ViewGroup) findViewById(R.id.primaryNavigationItemContainer);
 		mPrimaryNavigationBarItem = new NavigationBarItemGroup(context,
 				R.id.primaryNavigationItemContainer,
-				primaryNavigationItemContainer, Gravity.LEFT, "left");
+				primaryNavigationItemContainer, Gravity.LEFT);
 		mSecondaryNavigationBarItem = new NavigationBarItemGroup(
 				context,
 				R.id.secondaryNavigationItemContainer,
 				(ViewGroup) findViewById(R.id.secondaryNavigationItemContainer),
-				Gravity.END, "right");
+				Gravity.END);
 		mTitleNavigationBarItem = new NavigationBarTitle(context,
 				R.id.navigationTitle,
-				(TextView) findViewById(R.id.navigationTitle), Gravity.LEFT,
-				"title");
+				(TextView) findViewById(R.id.navigationTitle), Gravity.LEFT);
 
 		mListNavigation = (Spinner) findViewById(R.id.listNavigation);
 		mNavigationCustomContainer = (ViewGroup) findViewById(R.id.navigationCustomContainer);
@@ -100,8 +99,7 @@ class NavigationBarView extends FrameLayout {
 		mUpNavigationBarItem = new NavigationBarButton(context,
 				R.id.upNavigationItem, (TextView) inflater.inflate(
 						R.layout.layout_navigation_bar_item,
-						primaryNavigationItemContainer, false), Gravity.LEFT,
-				"up");
+						primaryNavigationItemContainer, false), Gravity.LEFT);
 		mUpNavigationBarItem.setIcon(mUpIndicator);
 		mUpNavigationBarItem.text.setTextAppearance(context,
 				mNavigationTextAppearance);
@@ -165,12 +163,12 @@ class NavigationBarView extends FrameLayout {
 	}
 
 	public NavigationBarItem newNavigationBarItem(int id, CharSequence title,
-			int icon, int gravity, String tag) {
+			int icon, int gravity) {
 		final Context context = getContext();
 		NavigationBarButton item = new NavigationBarButton(context, id,
 				(TextView) LayoutInflater.from(context).inflate(
-						R.layout.layout_navigation_bar_item, null), gravity,
-				tag);
+						R.layout.layout_navigation_bar_item,
+						getPrimaryNavigationItemGroup().group, false), gravity);
 		item.text.setTextAppearance(context, mNavigationTextAppearance);
 		item.setIcon(icon);
 		item.setTitle(title);

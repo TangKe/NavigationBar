@@ -17,9 +17,8 @@ public class NavigationBarTitle extends NavigationBarItem {
 	TextView text;
 	private int mIconSize;
 
-	NavigationBarTitle(Context context, int id, TextView view, int gravity,
-			String tag) {
-		super(context, id, view, gravity, tag);
+	NavigationBarTitle(Context context, int id, TextView view, int gravity) {
+		super(context, id, view, gravity);
 		text = view;
 		mIconSize = (int) TypedValue.applyDimension(
 				TypedValue.COMPLEX_UNIT_DIP, 40, context.getResources()

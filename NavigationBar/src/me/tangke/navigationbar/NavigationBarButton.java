@@ -21,9 +21,8 @@ public class NavigationBarButton extends NavigationBarItem {
 
 	TextView text;
 
-	NavigationBarButton(Context context, int id, TextView view, int gravity,
-			String tag) {
-		super(context, id, view, gravity, tag);
+	NavigationBarButton(Context context, int id, TextView view, int gravity) {
+		super(context, id, view, gravity);
 		text = view;
 
 		final Theme theme = context.getTheme();

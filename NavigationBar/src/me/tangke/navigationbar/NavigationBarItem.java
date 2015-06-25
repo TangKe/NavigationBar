@@ -3,14 +3,7 @@ package me.tangke.navigationbar;
 import java.lang.ref.WeakReference;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.content.res.Resources.Theme;
-import android.graphics.ColorFilter;
-import android.graphics.PorterDuff.Mode;
-import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -33,14 +26,11 @@ public abstract class NavigationBarItem implements OnClickListener {
 	OnNavigationItemClickListener onNavigationItemClickListener;
 
 	private WeakReference<Context> mContext;
-	private String tag;
 
-	NavigationBarItem(Context context, int id, View view, int gravity,
-			String tag) {
+	NavigationBarItem(Context context, int id, View view, int gravity) {
 		this.id = id;
 		this.view = view;
 		this.gravity = gravity;
-		this.tag = tag;
 		view.setOnClickListener(this);
 		this.mContext = new WeakReference<Context>(context);
 	}

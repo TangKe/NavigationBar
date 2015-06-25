@@ -16,12 +16,11 @@ public class NavigationBarItemGroup extends NavigationBarItem implements
 		NavigationBarItemParent {
 
 	private ArrayList<NavigationBarItem> mNavigationBarItems = new ArrayList<NavigationBarItem>();
-	private ViewGroup mGroup;
+	ViewGroup group;
 
-	NavigationBarItemGroup(Context context, int id, ViewGroup group,
-			int gravity, String tag) {
-		super(context, id, group, gravity, tag);
-		mGroup = group;
+	NavigationBarItemGroup(Context context, int id, ViewGroup group, int gravity) {
+		super(context, id, group, gravity);
+		this.group = group;
 	}
 
 	@Override
@@ -36,7 +35,7 @@ public class NavigationBarItemGroup extends NavigationBarItem implements
 		}
 		index = Math.max(0, Math.min(index, getNavigationBarItemCount()));
 		mNavigationBarItems.add(item);
-		mGroup.addView(item.view, index);
+		group.addView(item.view, index);
 	}
 
 	@Override
@@ -45,13 +44,13 @@ public class NavigationBarItemGroup extends NavigationBarItem implements
 			return;
 		}
 		NavigationBarItem item = mNavigationBarItems.remove(index);
-		mGroup.removeView(item.view);
+		group.removeView(item.view);
 	}
 
 	@Override
 	public void removeNavigationBarItem(NavigationBarItem item) {
 		mNavigationBarItems.remove(item);
-		mGroup.removeView(item.view);
+		group.removeView(item.view);
 	}
 
 	@Override

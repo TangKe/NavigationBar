@@ -164,7 +164,7 @@ public interface NavigationBar {
 	 * @return
 	 */
 	public NavigationBarItem newNavigationBarItem(int id, CharSequence title,
-			int icon, int gravity, String tag);
+			int icon, int gravity);
 
 	/**
 	 * 导航回调
