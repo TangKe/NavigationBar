@@ -27,6 +27,8 @@
         <flag name="displayShowCustom" value="2" />
         <!-- 显示标题 -->
         <flag name="displayShowTitle" value="4" />
+        <!-- 显示Logo -->
+        <flag name="displayShowLogo" value="8" />
     </attr>
     <!-- 导航文字样式 -->
     <attr name="navigationTextStyle" format="reference" />

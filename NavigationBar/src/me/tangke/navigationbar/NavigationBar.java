@@ -30,6 +30,7 @@ public interface NavigationBar {
 	public final static int DISPLAY_PRIMARY_NAVIGATION_AS_UP = 1 << 0;
 	public final static int DISPLAY_SHOW_CUSTOM = 1 << 1;
 	public final static int DISPLAY_SHOW_TITLE = 1 << 2;
+	public final static int DISPLAY_SHOW_LOGO = 1 << 3;
 
 	/**
 	 * 显示{@link NavigationBar}

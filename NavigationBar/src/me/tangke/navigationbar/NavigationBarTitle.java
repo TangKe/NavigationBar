@@ -17,6 +17,8 @@ public class NavigationBarTitle extends NavigationBarItem {
 	TextView text;
 	private int mIconSize;
 
+	private boolean mIsIconVisible;
+
 	NavigationBarTitle(Context context, int id, TextView view, int gravity) {
 		super(context, id, view, gravity);
 		text = view;
@@ -55,7 +57,16 @@ public class NavigationBarTitle extends NavigationBarItem {
 			break;
 		}
 
-		text.setCompoundDrawables(left, top, right, bottom);
+		if (mIsIconVisible) {
+			text.setCompoundDrawables(left, top, right, bottom);
+		} else {
+			text.setCompoundDrawables(null, null, null, null);
+		}
+	}
+
+	public void setIconVisible(boolean visible) {
+		mIsIconVisible = visible;
+		setIcon(icon);
 	}
 
 	@Override

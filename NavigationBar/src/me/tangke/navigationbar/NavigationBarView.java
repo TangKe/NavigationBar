@@ -6,6 +6,7 @@ import android.content.res.Resources.Theme;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -64,6 +65,7 @@ class NavigationBarView extends FrameLayout {
 		mDisplayOptions = a.getInteger(
 				R.styleable.NavigationBar_displayOptions,
 				NavigationBar.DISPLAY_SHOW_TITLE);
+		applyDisplayOptions();
 
 		a.recycle();
 	}
@@ -127,6 +129,12 @@ class NavigationBarView extends FrameLayout {
 		}
 		mTitleNavigationBarItem
 				.setVisible((displayOptions & NavigationBar.DISPLAY_SHOW_TITLE) == NavigationBar.DISPLAY_SHOW_TITLE);
+
+		mTitleNavigationBarItem
+				.setIconVisible((displayOptions & NavigationBar.DISPLAY_SHOW_LOGO) == NavigationBar.DISPLAY_SHOW_LOGO);
+		Log.e("Tank",
+				"tangk"
+						+ String.valueOf((displayOptions & NavigationBar.DISPLAY_SHOW_LOGO) == NavigationBar.DISPLAY_SHOW_LOGO));
 
 		mNavigationCustomContainer
 				.setVisibility((displayOptions & NavigationBar.DISPLAY_SHOW_CUSTOM) == NavigationBar.DISPLAY_SHOW_CUSTOM ? View.VISIBLE
