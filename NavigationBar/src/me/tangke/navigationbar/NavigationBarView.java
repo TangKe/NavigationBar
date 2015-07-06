@@ -132,9 +132,6 @@ class NavigationBarView extends FrameLayout {
 
 		mTitleNavigationBarItem
 				.setIconVisible((displayOptions & NavigationBar.DISPLAY_SHOW_LOGO) == NavigationBar.DISPLAY_SHOW_LOGO);
-		Log.e("Tank",
-				"tangk"
-						+ String.valueOf((displayOptions & NavigationBar.DISPLAY_SHOW_LOGO) == NavigationBar.DISPLAY_SHOW_LOGO));
 
 		mNavigationCustomContainer
 				.setVisibility((displayOptions & NavigationBar.DISPLAY_SHOW_CUSTOM) == NavigationBar.DISPLAY_SHOW_CUSTOM ? View.VISIBLE

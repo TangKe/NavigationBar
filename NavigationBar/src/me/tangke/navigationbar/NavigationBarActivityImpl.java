@@ -11,6 +11,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -46,8 +47,12 @@ class NavigationBarActivityImpl extends NavigationBarImpl {
 			int identifier = resources.getIdentifier("status_bar_height",
 					"dimen", "android");
 			if (0 < identifier) {
-				getNavigationBarView().setPadding(0,
-						resources.getDimensionPixelSize(identifier), 0, 0);
+				final View navigationBarView = getNavigationBarView();
+				final int paddingToApply = resources
+						.getDimensionPixelSize(identifier);
+				navigationBarView.setMinimumHeight(navigationBarView
+						.getMinimumHeight() + paddingToApply);
+				navigationBarView.setPadding(0, paddingToApply, 0, 0);
 			}
 		}
 	}
