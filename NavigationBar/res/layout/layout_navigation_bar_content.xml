@@ -19,8 +19,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:drawablePadding="5dp"
-        android:ellipsize="end"
-        android:gravity="center"
         android:singleLine="true" />
 
     <LinearLayout
