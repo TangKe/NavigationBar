@@ -4,8 +4,9 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.Resources.Theme;
 import android.content.res.TypedArray;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
+import android.text.TextUtils.TruncateAt;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -171,25 +172,13 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
 	 * indicate whether the title is overlap by navigation buttons
 	 */
 	private void resolveTitleOverlap() {
-		Rect titleBounds = new Rect();
-		Rect primaryNavigationItemGroupBounds = new Rect();
-		Rect secondaryNavigationItemGroupBounds = new Rect();
-
 		final View titleView = mTitleNavigationBarItem.view;
-		titleView.getHitRect(titleBounds);
-		mPrimaryNavigationBarItemGroup.view.getHitRect(primaryNavigationItemGroupBounds);
-		mSecondaryNavigationBarItemGroup.view.getHitRect(secondaryNavigationItemGroupBounds);
 
-		int paddingLeft = 0, paddingRight = 0;
-		if (titleBounds.intersect(primaryNavigationItemGroupBounds)) {
-			// title is overlap by primary navigation buttons
-			paddingLeft = Math.abs(primaryNavigationItemGroupBounds.right - titleBounds.left);
-		}
-
-		if (titleBounds.intersect(secondaryNavigationItemGroupBounds)) {
-			// title is overlap by secondary navigation buttons
-			paddingRight = Math.abs(titleBounds.right - secondaryNavigationItemGroupBounds.left);
-		}
+		int paddingLeft = Math.max(0, mPrimaryNavigationBarItemGroup.view.getRight() - titleView.getLeft()),
+				paddingRight = Math.max(0, titleView.getRight() - mSecondaryNavigationBarItemGroup.view.getLeft());
+		TextUtils.TruncateAt ellipsize = 0 < paddingLeft && 0 < paddingRight ? TruncateAt.MIDDLE
+				: (0 < paddingLeft ? TruncateAt.START : TruncateAt.END);
+		mTitleNavigationBarItem.text.setEllipsize(ellipsize);
 
 		titleView.setPadding(paddingLeft, titleView.getPaddingTop(), paddingRight, titleView.getPaddingBottom());
 	}
