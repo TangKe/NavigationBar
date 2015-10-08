@@ -17,7 +17,7 @@ import android.widget.TextView;
  *
  */
 public class NavigationBarButton extends NavigationBarItem {
-	private ColorFilter sColorFilter;
+	private ColorFilter mColorFilter;
 
 	TextView text;
 
@@ -31,10 +31,10 @@ public class NavigationBarButton extends NavigationBarItem {
 
 		theme.resolveAttribute(R.attr.colorPrimary, value, true);
 		if (TypedValue.TYPE_REFERENCE == value.type) {
-			sColorFilter = new PorterDuffColorFilter(
+			mColorFilter = new PorterDuffColorFilter(
 					resources.getColor(value.resourceId), Mode.SRC_IN);
 		} else {
-			sColorFilter = new PorterDuffColorFilter(value.data, Mode.SRC_IN);
+			mColorFilter = new PorterDuffColorFilter(value.data, Mode.SRC_IN);
 		}
 	}
 
@@ -45,12 +45,12 @@ public class NavigationBarButton extends NavigationBarItem {
 		}
 
 		if (null != this.icon) {
-			this.icon.setColorFilter(null);
+//			this.icon.setColorFilter(null);
 		}
 		this.icon = icon;
 
 		if (null != icon) {
-			icon.setColorFilter(sColorFilter);
+//			icon.setColorFilter(mColorFilter);
 		}
 
 		Drawable left = null, right = null, top = null, bottom = null;

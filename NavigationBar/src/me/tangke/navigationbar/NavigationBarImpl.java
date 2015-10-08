@@ -290,4 +290,11 @@ abstract class NavigationBarImpl implements NavigationBar,
 		return mNavigationBarView
 				.newNavigationBarItem(id, title, icon, gravity);
 	}
+
+	@Override
+	public NavigationBarItem newNavigationBarItem(int id, int title, int icon,
+			int gravity) {
+		return newNavigationBarItem(id, mContext.get().getString(title), icon,
+				gravity);
+	}
 }

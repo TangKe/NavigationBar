@@ -168,6 +168,19 @@ public interface NavigationBar {
 			int icon, int gravity);
 
 	/**
+	 * 生成新的{@link NavigationBarItem}
+	 * 
+	 * @param id
+	 * @param title
+	 * @param icon
+	 * @param gravity
+	 * @param tag
+	 * @return
+	 */
+	public NavigationBarItem newNavigationBarItem(int id, int title, int icon,
+			int gravity);
+
+	/**
 	 * 导航回调
 	 * 
 	 * @author Tank

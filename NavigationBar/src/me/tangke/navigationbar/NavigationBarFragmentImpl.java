@@ -36,7 +36,8 @@ class NavigationBarFragmentImpl extends NavigationBarActivityImpl {
 	@Override
 	public void setDisplayOptions(int displayOptions) {
 		// 过滤掉NavigationBar.DISPLAY_PRIMARY_NAVIGATION_AS_UP, Fragment不支持后退
-		super.setDisplayOptions(displayOptions
-				& ~NavigationBar.DISPLAY_PRIMARY_NAVIGATION_AS_UP);
+		super.setDisplayOptions(displayOptions);
+//		super.setDisplayOptions(displayOptions
+//				& ~NavigationBar.DISPLAY_PRIMARY_NAVIGATION_AS_UP);
 	}
 }

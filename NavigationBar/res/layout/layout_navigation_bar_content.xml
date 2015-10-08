@@ -2,14 +2,6 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:navigationbar="http://schemas.android.com/apk/res-auto" >
 
-    <LinearLayout
-        android:id="@id/primaryNavigationItemContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:gravity="start"
-        android:orientation="horizontal" />
-
     <Spinner
         android:id="@id/listNavigation"
         android:layout_width="wrap_content"
@@ -27,7 +19,17 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:drawablePadding="5dp"
-        android:gravity="center" />
+        android:ellipsize="end"
+        android:gravity="center"
+        android:singleLine="true" />
+
+    <LinearLayout
+        android:id="@id/primaryNavigationItemContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:gravity="start"
+        android:orientation="horizontal" />
 
     <LinearLayout
         android:id="@id/secondaryNavigationItemContainer"
