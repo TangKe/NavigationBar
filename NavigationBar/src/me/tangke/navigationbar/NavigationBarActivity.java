@@ -38,4 +38,16 @@ public abstract class NavigationBarActivity extends FragmentActivity implements
 	@Override
 	public void onNavigationItemClick(NavigationBarItem item) {
 	}
+	
+	@Override
+	public void setTitle(CharSequence title) {
+		super.setTitle(title);
+		mNavigationBarImpl.setTitle(title);
+	}
+	
+	@Override
+	public void setTitle(int titleId) {
+		super.setTitle(titleId);
+		mNavigationBarImpl.setTitle(titleId);
+	}
 }

@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.content.res.Resources.Theme;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.text.TextUtils;
 import android.text.TextUtils.TruncateAt;
 import android.util.AttributeSet;
@@ -97,7 +98,11 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
 	@Override
 	protected void onDetachedFromWindow() {
 		super.onDetachedFromWindow();
-		getViewTreeObserver().removeOnGlobalLayoutListener(this);
+		if (Build.VERSION_CODES.JELLY_BEAN <= Build.VERSION.SDK_INT) {
+			getViewTreeObserver().removeOnGlobalLayoutListener(this);
+		} else {
+			getViewTreeObserver().removeGlobalOnLayoutListener(this);
+		}
 	}
 
 	public void setDisplayOptions(int displayOptions) {
