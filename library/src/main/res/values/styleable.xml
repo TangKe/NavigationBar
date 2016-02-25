@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="NavigationBar">
+        <attr name="android:background" />
+        <attr name="navigationBarTitleTextStyle" />
+        <attr name="navigationTextStyle" />
+        <attr name="navigationBarDisplayOptions" />
+    </declare-styleable>
+    <declare-styleable name="AutoStateButton">
+        <attr name="pressedAplha" format="float" />
+    </declare-styleable>
+
+</resources>

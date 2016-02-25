@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.NavigationBar" parent="Theme.Base.NavigationBar">
+        <item name="isNavigationBarTheme">true</item>
+        <item name="windowNavigationBar">true</item>
+        <item name="navigationBarOverlay">false</item>
+        <item name="navigationBarItemBackground">@android:color/transparent</item>
+        <item name="navigationBarUpIndicator">@drawable/ic_up</item>
+        <item name="navigationBarUpIndicatorText">@string/navigation_back</item>
+        <item name="navigationBarSize">@dimen/default_navigation_bar_size</item>
+        <item name="navigationBarStyle">@style/Widget.NavigationBar</item>
+        <item name="navigationBarColorPrimary">@color/color_primary</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+</resources>
