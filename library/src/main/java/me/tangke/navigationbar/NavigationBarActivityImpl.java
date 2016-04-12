@@ -34,7 +34,18 @@ class NavigationBarActivityImpl extends NavigationBarImpl {
 
 	@Override
 	public CharSequence getDefaultTitle() {
-		return mActivity.get().getTitle();
+		final Activity activity = mActivity.get();
+		try {
+			final PackageManager packageManager = activity.getPackageManager();
+			ActivityInfo activityInfo = packageManager.getActivityInfo(
+					activity.getComponentName(), 0);
+			if (activityInfo.labelRes > 0) {
+				return activity.getResources().getString(activityInfo.labelRes);
+			}
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		return activity.getTitle();
 	}
 
 	@Override

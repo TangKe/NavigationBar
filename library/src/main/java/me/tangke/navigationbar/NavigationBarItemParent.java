@@ -16,5 +16,4 @@ public interface NavigationBarItemParent {
 	public void removeNavigationBarItem(NavigationBarItem item);
 
 	public int getNavigationBarItemCount();
-
 }
