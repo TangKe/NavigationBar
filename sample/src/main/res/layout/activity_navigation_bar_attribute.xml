@@ -10,34 +10,52 @@
         android:layout_height="wrap_content"
         android:text="@string/label_display_options"/>
 
-    <LinearLayout
+    <HorizontalScrollView
         android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <CheckBox
+                android:id="@+id/displayPrimaryNavigationAsUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_display_options_display_show_primary_as_up"/>
+
+            <CheckBox
+                android:id="@+id/displayShowTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_display_options_display_show_title"/>
+
+            <CheckBox
+                android:id="@+id/displayShowLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_display_options_display_show_logo"/>
+
+            <CheckBox
+                android:id="@+id/displayShowCustom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_display_options_display_show_custom"/>
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:text="@string/button_toggle"/>
 
-        <CheckBox
-            android:id="@+id/displayPrimaryNavigationAsUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_display_options_display_show_primary_as_up"/>
-
-        <CheckBox
-            android:id="@+id/displayShowTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_display_options_display_show_title"/>
-
-        <CheckBox
-            android:id="@+id/displayShowLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_display_options_display_show_logo"/>
-
-        <CheckBox
-            android:id="@+id/displayShowCustom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_display_options_display_show_custom"/>
-    </LinearLayout>
-
+    <ToggleButton
+        android:id="@+id/toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOff="@string/label_hide"
+        android:textOn="@string/label_show"/>
 </LinearLayout>

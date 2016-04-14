@@ -162,7 +162,7 @@ abstract class NavigationBarImpl implements NavigationBar,
 
     private void resolveNavigationMode() {
         NavigationBarItem titleNavigationBarItem = mNavigationBarView
-                .getPrimaryNavigationItemGroup();
+                .getTitleNavigationBarItem();
         switch (mNavigationMode) {
             case NAVIGATION_MODE_STANDARD:
                 titleNavigationBarItem.setTitle(mDefaultTitle);

@@ -8,5 +8,8 @@
     <string name="label_display_options_display_show_title">显示标题</string>
     <string name="label_display_options_display_show_logo">显示图标</string>
     <string name="label_display_options_display_show_custom">显示自定义View</string>
+    <string name="button_toggle">是否显示</string>
+    <string name="label_show">显示</string>
+    <string name="label_hide">隐藏</string>
 
 </resources>
