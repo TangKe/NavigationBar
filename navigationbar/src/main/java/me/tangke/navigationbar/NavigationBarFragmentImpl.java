@@ -1,12 +1,12 @@
 package me.tangke.navigationbar;
 
-import java.lang.ref.WeakReference;
-
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
+
+import java.lang.ref.WeakReference;
 
 /**
  * {@link NavigationBar} implements for Fragment

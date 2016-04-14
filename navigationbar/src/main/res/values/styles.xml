@@ -18,4 +18,19 @@
         <item name="android:textSize">17sp</item>
     </style>
 
+    <style name="Widget.NavigationDropDown" parent="android:Widget.Spinner.DropDown">
+        <item name="android:dropDownWidth">150dp</item>
+        <item name="android:background">@drawable/list_navigation_background</item>
+        <item name="android:dropDownSelector">@drawable/navigation_list_selector</item>
+        <item name="android:dropDownVerticalOffset">1px</item>
+        <item name="android:listSelector">@drawable/navigation_list_selector</item>
+        <item name="android:popupBackground">@drawable/navigation_list_dropdown_background</item>
+    </style>
+
+    <style name="Widget.NavigationDropDown.Light">
+        <item name="android:popupBackground">@drawable/navigation_list_dropdown_background_light
+        </item>
+    </style>
+
+
 </resources>

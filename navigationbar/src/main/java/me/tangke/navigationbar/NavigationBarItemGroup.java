@@ -1,10 +1,10 @@
 package me.tangke.navigationbar;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
 
 /**
  * NavigationBarItem container

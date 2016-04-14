@@ -1,11 +1,11 @@
 package me.tangke.navigationbar;
 
-import java.lang.ref.WeakReference;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.View.OnClickListener;
+
+import java.lang.ref.WeakReference;
 
 /**
  * NavigationBar item define

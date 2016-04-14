@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.Resources.Theme;
 import android.content.res.TypedArray;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.TextUtils.TruncateAt;
@@ -20,11 +23,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
+    static ColorFilter sColorAccentFilter;
+    static ColorFilter sTextColorPrimaryFilter;
     private ViewGroup mNavigationCustomContainer;
 
     private Spinner mListNavigation;
 
     private int mDisplayOptions;
+    private int mNavigationMode;
     private Drawable mUpIndicator;
     private CharSequence mUpIndicatorText;
 
@@ -45,8 +51,24 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
         theme.resolveAttribute(R.attr.upIndicatorText, value, true);
         mUpIndicatorText = 0 < value.resourceId ? resources.getText(value.resourceId) : null;
 
-        theme.resolveAttribute(R.attr.navigationBarUpIndicator, value, true);
+        theme.resolveAttribute(R.attr.upIndicator, value, true);
         mUpIndicator = 0 < value.resourceId ? resources.getDrawable(value.resourceId) : null;
+
+        theme.resolveAttribute(R.attr.colorAccent, value, true);
+        if (TypedValue.TYPE_REFERENCE == value.type) {
+            sColorAccentFilter = new PorterDuffColorFilter(
+                    resources.getColor(value.resourceId), PorterDuff.Mode.SRC_IN);
+        } else {
+            sColorAccentFilter = new PorterDuffColorFilter(value.data, PorterDuff.Mode.SRC_IN);
+        }
+
+        theme.resolveAttribute(R.attr.textColorPrimary, value, true);
+        if (TypedValue.TYPE_REFERENCE == value.type) {
+            sTextColorPrimaryFilter = new PorterDuffColorFilter(
+                    resources.getColor(value.resourceId), PorterDuff.Mode.SRC_IN);
+        } else {
+            sTextColorPrimaryFilter = new PorterDuffColorFilter(value.data, PorterDuff.Mode.SRC_IN);
+        }
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.NavigationBar,
                 defStyleAttr,
@@ -58,10 +80,10 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
         prepareNavigationBarContent();
 
         mTitleNavigationBarItem.text.setTextAppearance(context,
-                a.getResourceId(R.styleable.NavigationBar_navigationBarTitleTextStyle, R.style
-						.TextAppearance_NavigationBar_Title));
-        mDisplayOptions = a.getInteger(R.styleable.NavigationBar_navigationBarDisplayOptions,
-				NavigationBar.DISPLAY_SHOW_TITLE);
+                a.getResourceId(R.styleable.NavigationBar_titleTextStyle, R.style
+                        .TextAppearance_NavigationBar_Title));
+        mDisplayOptions = a.getInteger(R.styleable.NavigationBar_displayOptions,
+                NavigationBar.DISPLAY_SHOW_TITLE);
         applyDisplayOptions();
         a.recycle();
         getViewTreeObserver().addOnGlobalLayoutListener(this);
@@ -80,22 +102,26 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
         final LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.layout_navigation_bar_content, this);
         ViewGroup primaryNavigationItemContainer = (ViewGroup) findViewById(R.id
-				.primaryNavigationItemContainer);
+                .primaryNavigationItemContainer);
         mPrimaryNavigationBarItemGroup = new NavigationBarItemGroup(context, R.id
-				.primaryNavigationItemContainer,
+                .primaryNavigationItemContainer,
                 primaryNavigationItemContainer, Gravity.LEFT);
         mSecondaryNavigationBarItemGroup = new NavigationBarItemGroup(context, R.id
-				.secondaryNavigationItemContainer,
+                .secondaryNavigationItemContainer,
                 (ViewGroup) findViewById(R.id.secondaryNavigationItemContainer), Gravity.END);
         mTitleNavigationBarItem = new NavigationBarTitle(context, R.id.navigationTitle,
                 (TextView) findViewById(R.id.navigationTitle), Gravity.LEFT);
 
         mListNavigation = (Spinner) findViewById(R.id.listNavigation);
+        Drawable listBackground = mListNavigation.getBackground();
+        if (null != listBackground) {
+            listBackground.setColorFilter(sTextColorPrimaryFilter);
+        }
         mNavigationCustomContainer = (ViewGroup) findViewById(R.id.navigationCustomContainer);
 
         mUpNavigationBarItem = new NavigationBarButton(context, R.id.upNavigationItem,
                 (TextView) inflater.inflate(R.layout.layout_navigation_bar_item,
-						primaryNavigationItemContainer, false),
+                        primaryNavigationItemContainer, false),
                 Gravity.LEFT);
         mUpNavigationBarItem.setIcon(mUpIndicator);
         mUpNavigationBarItem.text.setTextAppearance(context, mNavigationTextAppearance);
@@ -118,6 +144,24 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
         applyDisplayOptions();
     }
 
+    public void setNavigationMode(int navigationMode) {
+        mNavigationMode = navigationMode;
+        resolveNavigationMode();
+    }
+
+    private void resolveNavigationMode() {
+        switch (mNavigationMode) {
+            case NavigationBar.NAVIGATION_MODE_STANDARD:
+                mTitleNavigationBarItem.setVisible(true);
+                mListNavigation.setVisibility(View.GONE);
+                break;
+            case NavigationBar.NAVIGATION_MODE_LIST:
+                mTitleNavigationBarItem.setVisible(false);
+                mListNavigation.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
+
     public int getDisplayOptions() {
         return mDisplayOptions;
     }
@@ -132,22 +176,23 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
         }
         mTitleNavigationBarItem
                 .setVisible((displayOptions & NavigationBar.DISPLAY_SHOW_TITLE) == NavigationBar
-						.DISPLAY_SHOW_TITLE);
+                        .DISPLAY_SHOW_TITLE && mNavigationMode != NavigationBar
+                        .NAVIGATION_MODE_LIST);
 
         mTitleNavigationBarItem
                 .setIconVisible((displayOptions & NavigationBar.DISPLAY_SHOW_LOGO) ==
-						NavigationBar.DISPLAY_SHOW_LOGO);
+                        NavigationBar.DISPLAY_SHOW_LOGO);
 
         mNavigationCustomContainer
                 .setVisibility((displayOptions & NavigationBar.DISPLAY_SHOW_CUSTOM) ==
-						NavigationBar.DISPLAY_SHOW_CUSTOM
+                        NavigationBar.DISPLAY_SHOW_CUSTOM
                         ? View.VISIBLE : View.GONE);
     }
 
     private boolean isPrimaryNavigationAsUp() {
         return (mDisplayOptions
                 & NavigationBar.DISPLAY_PRIMARY_NAVIGATION_AS_UP) == NavigationBar
-				.DISPLAY_PRIMARY_NAVIGATION_AS_UP;
+                .DISPLAY_PRIMARY_NAVIGATION_AS_UP;
     }
 
     public NavigationBarItemGroup getPrimaryNavigationItemGroup() {
@@ -176,12 +221,12 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
     }
 
     public NavigationBarItem newNavigationBarItem(int id, CharSequence title, int icon, int
-			gravity) {
+            gravity) {
         final Context context = getContext();
         NavigationBarButton item = new NavigationBarButton(context, id, (TextView) LayoutInflater
-				.from(context)
+                .from(context)
                 .inflate(R.layout.layout_navigation_bar_item, getPrimaryNavigationItemGroup()
-						.group, false), gravity);
+                        .group, false), gravity);
         item.text.setTextAppearance(context, mNavigationTextAppearance);
         item.setIcon(icon);
         item.setTitle(title);
@@ -194,13 +239,16 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
     private void resolveTitleOverlap() {
         final View titleView = mTitleNavigationBarItem.view;
 
-        int paddingLeft = Math.max(0, mPrimaryNavigationBarItemGroup.view.getRight() - titleView.getLeft()),
-                paddingRight = Math.max(0, titleView.getRight() - mSecondaryNavigationBarItemGroup.view.getLeft());
+        int paddingLeft = Math.max(0, mPrimaryNavigationBarItemGroup.view.getRight() - titleView
+                .getLeft()),
+                paddingRight = Math.max(0, titleView.getRight() -
+                        mSecondaryNavigationBarItemGroup.view.getLeft());
         TruncateAt ellipsize = 0 < paddingLeft && 0 < paddingRight ? TruncateAt.MIDDLE
                 : (0 < paddingLeft ? TruncateAt.START : TruncateAt.END);
         mTitleNavigationBarItem.text.setEllipsize(ellipsize);
 
-        titleView.setPadding(paddingLeft, titleView.getPaddingTop(), paddingRight, titleView.getPaddingBottom());
+        titleView.setPadding(paddingLeft, titleView.getPaddingTop(), paddingRight, titleView
+                .getPaddingBottom());
     }
 
     @Override

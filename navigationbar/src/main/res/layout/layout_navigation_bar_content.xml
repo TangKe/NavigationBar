@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:navigationbar="http://schemas.android.com/apk/res-auto">
+    >
 
     <Spinner
         android:id="@id/listNavigation"
+        style="?attr/navigationDropdownStyle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/navigationBarSize"
         android:layout_gravity="center"
-        android:dropDownSelector="@drawable/navigation_list_selector"
-        android:dropDownVerticalOffset="1px"
-        android:listSelector="@drawable/navigation_list_selector"
-        android:popupBackground="@drawable/navigation_list_dropdown_background"
         android:visibility="invisible"/>
 
     <TextView

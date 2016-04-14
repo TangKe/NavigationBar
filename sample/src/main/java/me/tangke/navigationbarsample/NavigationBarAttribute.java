@@ -1,21 +1,27 @@
 package me.tangke.navigationbarsample;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RadioGroup;
+import android.widget.ToggleButton;
 
 import me.tangke.navigationbar.NavigationBar;
 import me.tangke.navigationbar.NavigationBarActivity;
 
 public class NavigationBarAttribute extends NavigationBarActivity implements OnClickListener,
-        CompoundButton.OnCheckedChangeListener {
+        CompoundButton.OnCheckedChangeListener, RadioGroup.OnCheckedChangeListener {
     private CheckBox mDisplayShowPrimaryAsUp;
     private CheckBox mDisplayShowTitle;
     private CheckBox mDisplayShowLogo;
     private CheckBox mDisplayShowCustom;
+
+    private ToggleButton mToggle;
+
+    private RadioGroup mNavigationMode;
 
     private int mDisplayOptions;
 
@@ -36,11 +42,26 @@ public class NavigationBarAttribute extends NavigationBarActivity implements OnC
         mDisplayShowLogo.setOnCheckedChangeListener(this);
         mDisplayShowCustom = (CheckBox) findViewById(R.id.displayShowCustom);
         mDisplayShowCustom.setOnCheckedChangeListener(this);
+        mToggle = (ToggleButton) findViewById(R.id.toggle);
+        mToggle.setOnClickListener(this);
+
+        mNavigationMode = (RadioGroup) findViewById(R.id.navigationMode);
+        mNavigationMode.setOnCheckedChangeListener(this);
+
+        getNavigationBar().setCustomView(R.layout.layout_custom_view);
     }
 
     @Override
-    public void onClick(View arg0) {
-        startActivity(new Intent(this, NavigationFeature.class));
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.toggle:
+                if (mToggle.isChecked()) {
+                    getNavigationBar().hide();
+                } else {
+                    getNavigationBar().show();
+                }
+                break;
+        }
     }
 
     @Override
@@ -76,5 +97,20 @@ public class NavigationBarAttribute extends NavigationBarActivity implements OnC
                 break;
         }
         getNavigationBar().setDisplayOptions(mDisplayOptions);
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        final NavigationBar navigationBar = getNavigationBar();
+        switch (checkedId) {
+            case R.id.standard:
+                navigationBar.setNavigationMode(NavigationBar.NAVIGATION_MODE_STANDARD);
+                break;
+            case R.id.list:
+                navigationBar.setNavigationMode(NavigationBar.NAVIGATION_MODE_LIST);
+                navigationBar.setListNavigationCallbacks(ArrayAdapter.createFromResource(this, R
+                        .array.list_navigation, android.R.layout.simple_dropdown_item_1line), null);
+                break;
+        }
     }
 }

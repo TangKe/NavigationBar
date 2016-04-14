@@ -11,5 +11,15 @@
     <string name="button_toggle">是否显示</string>
     <string name="label_show">显示</string>
     <string name="label_hide">隐藏</string>
+    <string name="label_navigation_mode">导航模式</string>
+    <string name="label_navigation_mode_standard">标准</string>
+    <string name="label_navigation_mode_list">列表</string>
+
+    <array name="list_navigation">
+        <item>测试1</item>
+        <item>测试2</item>
+        <item>测试3</item>
+        <item>测试4</item>
+    </array>
 
 </resources>

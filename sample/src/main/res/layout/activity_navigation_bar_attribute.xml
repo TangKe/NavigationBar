@@ -1,6 +1,5 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -58,4 +57,28 @@
         android:layout_height="wrap_content"
         android:textOff="@string/label_hide"
         android:textOn="@string/label_show"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_navigation_mode"/>
+
+    <RadioGroup
+        android:id="@+id/navigationMode"
+        android:layout_width="match_parent"
+        android:checkedButton="@+id/standard"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/standard"
+            android:layout_width="wrap_content"
+            android:text="@string/label_navigation_mode_standard"
+            android:layout_height="wrap_content"/>
+        <RadioButton
+            android:id="@+id/list"
+            android:layout_width="wrap_content"
+            android:text="@string/label_navigation_mode_list"
+            android:layout_height="wrap_content"/>
+    </RadioGroup>
 </LinearLayout>

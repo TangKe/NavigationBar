@@ -1,14 +1,13 @@
 package me.tangke.navigationbar;
 
-import java.util.Arrays;
-
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import java.util.Arrays;
 
 /**
  * Add pressed state to Button, when user pressed on this Button, this Button will become

@@ -1,7 +1,5 @@
 package me.tangke.navigationbar;
 
-import java.lang.ref.WeakReference;
-
 import android.content.Context;
 import android.content.res.Resources.Theme;
 import android.graphics.drawable.Drawable;
@@ -14,6 +12,8 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+
+import java.lang.ref.WeakReference;
 
 /**
  * {@link NavigationBar} implements
@@ -30,7 +30,6 @@ abstract class NavigationBarImpl implements NavigationBar,
 
     private OnNavigationItemClickListener mOnNavigationItemClickListener;
 
-    private int mNavigationMode;
     private boolean mIsNavigationBarOverlay;
     private boolean mHasNavigationBar;
 
@@ -156,24 +155,7 @@ abstract class NavigationBarImpl implements NavigationBar,
 
     @Override
     public void setNavigationMode(int mode) {
-        mNavigationMode = mode;
-        resolveNavigationMode();
-    }
-
-    private void resolveNavigationMode() {
-        NavigationBarItem titleNavigationBarItem = mNavigationBarView
-                .getTitleNavigationBarItem();
-        switch (mNavigationMode) {
-            case NAVIGATION_MODE_STANDARD:
-                titleNavigationBarItem.setTitle(mDefaultTitle);
-                titleNavigationBarItem.setEnabled(false);
-                break;
-            case NAVIGATION_MODE_LIST:
-                titleNavigationBarItem.setTitle("");
-                titleNavigationBarItem.setEnabled(true);
-                // TODO 修复重构后列表导航
-                break;
-        }
+        mNavigationBarView.setNavigationMode(mode);
     }
 
     @Override
@@ -271,7 +253,6 @@ abstract class NavigationBarImpl implements NavigationBar,
     public void onNavigationItemClick(NavigationBarItem item) {
         final int id = item.id;
         if (id == R.id.navigationTitle) {
-            mNavigationBarView.getListNavigation().performClick();
             return;
         }
 
