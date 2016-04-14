@@ -2,6 +2,8 @@
 
     <style name="AppBaseTheme" parent="Theme.NavigationBar"></style>
 
-    <style name="AppTheme" parent="AppBaseTheme"></style>
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:colorAccent">?attr/colorAccent</item>
+    </style>
 
 </resources>

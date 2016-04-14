@@ -3,5 +3,10 @@
 
     <string name="app_name">NavigationBarDemo</string>
     <string name="title_navigation_bar_attribute">NavigationBar属性</string>
+    <string name="label_display_options">显示模式</string>
+    <string name="label_display_options_display_show_primary_as_up">显示返回按钮</string>
+    <string name="label_display_options_display_show_title">显示标题</string>
+    <string name="label_display_options_display_show_logo">显示图标</string>
+    <string name="label_display_options_display_show_custom">显示自定义View</string>
 
 </resources>
