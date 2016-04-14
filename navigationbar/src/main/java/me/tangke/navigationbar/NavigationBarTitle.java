@@ -28,10 +28,6 @@ public class NavigationBarTitle extends NavigationBarItem {
 
     @Override
     public void setIcon(Drawable icon) {
-        if (this.icon == icon) {
-            return;
-        }
-
         this.icon = icon;
         if (null != icon) {
             icon.setBounds(0, 0, mIconSize, mIconSize);
