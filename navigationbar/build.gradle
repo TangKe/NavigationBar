@@ -15,7 +15,7 @@ ext {
     siteUrl = 'https://github.com/TangKe/NavigationBar'
     gitUrl = 'https://github.com/TangKe/NavigationBar.git'
 
-    libraryVersion = '0.1'
+    libraryVersion = '0.2'
 
     developerId = 'tangke'
     developerName = 'Tang Ke'
@@ -35,8 +35,8 @@ android {
     defaultConfig {
         minSdkVersion 7
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "0.2"
     }
     buildTypes {
         release {
