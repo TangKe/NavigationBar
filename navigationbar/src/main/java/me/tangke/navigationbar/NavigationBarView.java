@@ -126,6 +126,8 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
         mUpNavigationBarItem.setIcon(mUpIndicator);
         mUpNavigationBarItem.text.setTextAppearance(context, mNavigationTextAppearance);
         mUpNavigationBarItem.setTitle(mUpIndicatorText);
+        mUpNavigationBarItem.setVisible(false);
+        mPrimaryNavigationBarItemGroup.addNavigationBarItem(mUpNavigationBarItem, 0);
     }
 
     @Override
@@ -169,11 +171,7 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
     private void applyDisplayOptions() {
         final int displayOptions = mDisplayOptions;
         boolean isPrimaryNavigationAsUp = isPrimaryNavigationAsUp();
-        if (isPrimaryNavigationAsUp) {
-            mPrimaryNavigationBarItemGroup.addNavigationBarItem(mUpNavigationBarItem, 0);
-        } else {
-            mPrimaryNavigationBarItemGroup.removeNavigationBarItem(mUpNavigationBarItem);
-        }
+        mUpNavigationBarItem.setVisible(isPrimaryNavigationAsUp);
         mTitleNavigationBarItem
                 .setVisible((displayOptions & NavigationBar.DISPLAY_SHOW_TITLE) == NavigationBar
                         .DISPLAY_SHOW_TITLE && mNavigationMode != NavigationBar

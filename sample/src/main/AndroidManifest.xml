@@ -1,5 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="me.tangke.navigationbarsample">
+<manifest package="me.tangke.navigationbarsample"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:allowBackup="true"
@@ -9,12 +9,12 @@
 
         <activity android:name=".NavigationBarAttribute">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".NavigationFeature" />
+        <activity android:name=".NavigationFeature"/>
 
     </application>
 
