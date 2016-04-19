@@ -35,11 +35,4 @@ class NavigationBarFragmentImpl extends NavigationBarActivityImpl {
                 FrameLayout.LayoutParams.MATCH_PARENT) : params;
         getNavigationBarContentView().addView(view, params);
     }
-
-    @Override
-    public void setDisplayOptions(int displayOptions) {
-        //Fragment not support back
-        super.setDisplayOptions(displayOptions
-                & ~NavigationBar.DISPLAY_PRIMARY_NAVIGATION_AS_UP);
-    }
 }
