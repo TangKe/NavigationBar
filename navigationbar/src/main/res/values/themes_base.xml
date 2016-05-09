@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Base.NavigationBar" parent="android:Theme.NoTitleBar"></style>
-    <style name="Theme.Base.NavigationBar.Light" parent="android:Theme.Light.NoTitleBar"></style>
+    <style name="Theme.Base.NavigationBar" parent="Theme.AppCompat"></style>
+    <style name="Theme.Base.NavigationBar.Light" parent="Theme.AppCompat.Light"></style>
 
 </resources>

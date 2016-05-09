@@ -1,7 +1,7 @@
 <resources>
 
-    <style name="AppBaseTheme" parent="Theme.NavigationBar.Light.DarkNavigationBar">
-        <item name="android:colorAccent">?attr/navigationBarColorAccent</item>
+    <style name="AppBaseTheme" parent="Theme.NavigationBar">
+        <item name="colorAccent">?attr/navigationBarColorAccent</item>
     </style>
 
 
