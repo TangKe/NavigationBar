@@ -49,7 +49,7 @@ abstract class NavigationBarImpl implements NavigationBar,
 
         final Theme theme = mContext.get().getTheme();
         final TypedValue value = mValue;
-        theme.resolveAttribute(R.attr.navigationBarOverlay, value, true);
+        theme.resolveAttribute(R.attr.windowNavigationBarOverlay, value, true);
         mIsNavigationBarOverlay = 0 != value.data;
         mNavigationBarContainer = (ViewGroup) mInflater
                 .inflate(

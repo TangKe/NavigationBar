@@ -3,9 +3,9 @@
 
     <declare-styleable name="NavigationBar">
         <attr name="android:background" />
-        <attr name="titleTextStyle" />
+        <attr name="navigationBarTitleTextStyle" />
         <attr name="navigationTextStyle" />
-        <attr name="displayOptions" />
+        <attr name="navigationBarDisplayOptions" />
     </declare-styleable>
     <declare-styleable name="AutoStateButton">
         <attr name="pressedAplha" format="float" />

@@ -48,13 +48,13 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
         final Resources resources = context.getResources();
         TypedValue value = new TypedValue();
 
-        theme.resolveAttribute(R.attr.upIndicatorText, value, true);
+        theme.resolveAttribute(R.attr.navigationBarUpIndicatorText, value, true);
         mUpIndicatorText = 0 < value.resourceId ? resources.getText(value.resourceId) : null;
 
-        theme.resolveAttribute(R.attr.upIndicator, value, true);
+        theme.resolveAttribute(R.attr.navigationBarUpIndicator, value, true);
         mUpIndicator = 0 < value.resourceId ? resources.getDrawable(value.resourceId) : null;
 
-        theme.resolveAttribute(R.attr.colorAccent, value, true);
+        theme.resolveAttribute(R.attr.navigationBarColorAccent, value, true);
         if (TypedValue.TYPE_REFERENCE == value.type) {
             sColorAccentFilter = new PorterDuffColorFilter(
                     resources.getColor(value.resourceId), PorterDuff.Mode.SRC_IN);
@@ -62,7 +62,7 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
             sColorAccentFilter = new PorterDuffColorFilter(value.data, PorterDuff.Mode.SRC_IN);
         }
 
-        theme.resolveAttribute(R.attr.textColorPrimary, value, true);
+        theme.resolveAttribute(R.attr.navigationBarTextColorPrimary, value, true);
         if (TypedValue.TYPE_REFERENCE == value.type) {
             sTextColorPrimaryFilter = new PorterDuffColorFilter(
                     resources.getColor(value.resourceId), PorterDuff.Mode.SRC_IN);
@@ -80,9 +80,9 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
         prepareNavigationBarContent();
 
         mTitleNavigationBarItem.text.setTextAppearance(context,
-                a.getResourceId(R.styleable.NavigationBar_titleTextStyle, R.style
+                a.getResourceId(R.styleable.NavigationBar_navigationBarTitleTextStyle, R.style
                         .TextAppearance_NavigationBar_Title));
-        mDisplayOptions = a.getInteger(R.styleable.NavigationBar_displayOptions,
+        mDisplayOptions = a.getInteger(R.styleable.NavigationBar_navigationBarDisplayOptions,
                 NavigationBar.DISPLAY_SHOW_TITLE);
         applyDisplayOptions();
         a.recycle();

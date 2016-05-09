@@ -4,7 +4,7 @@
     <!-- 是否有导航栏 -->
     <attr name="windowNavigationBar" format="boolean"/>
     <!-- 导航栏覆盖模式 -->
-    <attr name="navigationBarOverlay" format="boolean"/>
+    <attr name="windowNavigationBarOverlay" format="boolean"/>
     <!-- 导航栏样式 -->
     <attr name="navigationBarStyle" format="boolean"/>
     <!-- 导航栏高度 -->
@@ -14,13 +14,13 @@
     <!-- 导航按钮的背景样式 -->
     <attr name="navigationBarItemBackground" format="reference"/>
     <!-- 返回图标 -->
-    <attr name="upIndicator" format="reference"/>
+    <attr name="navigationBarUpIndicator" format="reference"/>
     <!-- 返回文本, 默认为返回 -->
-    <attr name="upIndicatorText" format="reference"/>
+    <attr name="navigationBarUpIndicatorText" format="reference"/>
     <!-- 标题文本样式 -->
-    <attr name="titleTextStyle" format="reference|string"/>
+    <attr name="navigationBarTitleTextStyle" format="reference|string"/>
     <!-- 显示选项 -->
-    <attr name="displayOptions">
+    <attr name="navigationBarDisplayOptions">
         <!-- 显示成点击返回样式 -->
         <flag name="displayPrimaryNavigationAsUp" value="1"/>
         <!-- 显示自定义View -->
@@ -33,10 +33,9 @@
     <!-- 导航文字样式 -->
     <attr name="navigationTextStyle" format="reference"/>
     <!-- 导航栏的文本主色 -->
-    <attr name="colorPrimary" format="reference|color"/>
-    <!-- -->
-    <attr name="textColorPrimary" format="reference|color"/>
-    <attr name="colorAccent" format="reference|color"/>
+    <attr name="navigationBarColorPrimary" format="reference|color"/>
+    <attr name="navigationBarTextColorPrimary" format="reference|color"/>
+    <attr name="navigationBarColorAccent" format="reference|color"/>
     <!-- 导航按钮样式 -->
     <attr name="autoStateButtonStyle" format="reference"/>
     <attr name="navigationDropdownStyle" format="reference"/>
