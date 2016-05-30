@@ -1,5 +1,6 @@
 package me.tangke.navigationbarsample;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import me.tangke.navigationbar.NavigationBarActivity;

@@ -22,6 +22,8 @@ public abstract class NavigationBarItem implements OnClickListener {
 
     int gravity;
 
+    boolean isTintEnable = true;
+
     OnNavigationItemClickListener onNavigationItemClickListener;
 
     private WeakReference<Context> mContext;
@@ -80,6 +82,15 @@ public abstract class NavigationBarItem implements OnClickListener {
         return view.isEnabled();
     }
 
+    public void setTintEnable(boolean isEnable) {
+        isTintEnable = isEnable;
+        invalidate();
+    }
+
+    public boolean isTintEnable() {
+        return isTintEnable;
+    }
+
     @Override
     public void onClick(View v) {
         if (null != onNavigationItemClickListener) {
@@ -91,4 +102,11 @@ public abstract class NavigationBarItem implements OnClickListener {
         this.onNavigationItemClickListener = listener;
     }
 
+    final void invalidate() {
+        onInvalidate();
+    }
+
+    protected void onInvalidate() {
+
+    }
 }

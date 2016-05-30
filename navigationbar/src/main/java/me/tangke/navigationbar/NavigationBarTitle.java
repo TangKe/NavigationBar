@@ -53,9 +53,9 @@ public class NavigationBarTitle extends NavigationBarItem {
         }
 
         if (mIsIconVisible) {
-            text.setCompoundDrawables(left, top, right, bottom);
+            text.setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom);
         } else {
-            text.setCompoundDrawables(null, null, null, null);
+            text.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
         }
     }
 

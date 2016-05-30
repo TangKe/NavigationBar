@@ -103,14 +103,13 @@ class NavigationBarActivityImpl extends NavigationBarImpl {
 
     @SuppressLint("NewApi")
     @Override
-    protected void onNavigationUp() {
+    protected boolean onNavigateUp() {
         final Activity activity = mActivity.get();
         if (Build.VERSION_CODES.JELLY_BEAN <= Build.VERSION.SDK_INT) {
-            if (!activity.onNavigateUp()) {
-                activity.finish();
-            }
+            return activity.onNavigateUp();
         } else {
             activity.finish();
+            return true;
         }
     }
 

@@ -123,7 +123,7 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
                 (TextView) inflater.inflate(R.layout.layout_navigation_bar_item,
                         primaryNavigationItemContainer, false),
                 Gravity.LEFT);
-        mUpNavigationBarItem.setIcon(mUpIndicator);
+        mUpNavigationBarItem.setIcon(mUpIndicator.mutate());
         mUpNavigationBarItem.text.setTextAppearance(context, mNavigationTextAppearance);
         mUpNavigationBarItem.setTitle(mUpIndicatorText);
         mUpNavigationBarItem.setVisible(false);

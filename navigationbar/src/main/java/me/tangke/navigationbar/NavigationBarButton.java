@@ -27,7 +27,7 @@ public class NavigationBarButton extends NavigationBarItem {
         this.icon = icon;
 
         if (null != icon) {
-            icon.setColorFilter(NavigationBarView.sColorAccentFilter);
+            icon.setColorFilter(isTintEnable ? NavigationBarView.sColorAccentFilter : null);
         }
 
         Drawable left = null, right = null, top = null, bottom = null;
@@ -56,5 +56,10 @@ public class NavigationBarButton extends NavigationBarItem {
     public void setTitle(CharSequence title) {
         super.setTitle(title);
         text.setText(title);
+    }
+
+    @Override
+    protected void onInvalidate() {
+        setIcon(this.icon);
     }
 }

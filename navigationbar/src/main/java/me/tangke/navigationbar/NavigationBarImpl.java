@@ -1,6 +1,6 @@
 package me.tangke.navigationbar;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.res.Resources.Theme;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
@@ -33,7 +33,7 @@ abstract class NavigationBarImpl implements NavigationBar,
     private boolean mIsNavigationBarOverlay;
     private boolean mHasNavigationBar;
 
-    private WeakReference<Context> mContext;
+    private WeakReference<Activity> mContext;
     private LayoutInflater mInflater;
 
     private CharSequence mDefaultTitle;
@@ -41,7 +41,7 @@ abstract class NavigationBarImpl implements NavigationBar,
 
     private TypedValue mValue = new TypedValue();
 
-    public NavigationBarImpl(Context context) {
+    public NavigationBarImpl(Activity context) {
         mContext = new WeakReference<>(context);
         mInflater = LayoutInflater.from(context);
 
@@ -115,7 +115,7 @@ abstract class NavigationBarImpl implements NavigationBar,
             ViewGroup navigationBarContainer,
             ViewGroup navigationBarContentContainer);
 
-    protected abstract void onNavigationUp();
+    protected abstract boolean onNavigateUp();
 
     public boolean hasNavigationBar() {
         return mHasNavigationBar;
@@ -257,7 +257,9 @@ abstract class NavigationBarImpl implements NavigationBar,
         }
 
         if (item.id == R.id.upNavigationItem) {
-            onNavigationUp();
+            if (!onNavigateUp()) {
+                mContext.get().finish();
+            }
         }
         if (null != mOnNavigationItemClickListener) {
             mOnNavigationItemClickListener.onNavigationItemClick(item);
