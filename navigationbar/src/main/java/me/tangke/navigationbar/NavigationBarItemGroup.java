@@ -65,7 +65,6 @@ public class NavigationBarItemGroup extends NavigationBarItem implements
     protected void onInvalidate() {
         super.onInvalidate();
         for (NavigationBarItem item : mNavigationBarItems) {
-            item.setTintEnable(isTintEnable);
             item.setTintColor(tintColor);
 //            item.setTitle(title);
 //            item.setIcon(icon);

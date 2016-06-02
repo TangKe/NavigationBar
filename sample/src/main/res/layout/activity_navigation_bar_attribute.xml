@@ -87,7 +87,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/label_color"/>
+        android:text="@string/label_tint"/>
+
+    <ToggleButton
+        android:id="@+id/tint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOff="@string/label_tint_off"
+        android:textOn="@string/label_tint_on"/>
 
     <RadioGroup
         android:id="@+id/colors"

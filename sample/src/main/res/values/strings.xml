@@ -15,6 +15,9 @@
     <string name="label_navigation_mode_standard">标准</string>
     <string name="label_navigation_mode_list">列表</string>
 
+    <string name="label_tint">着色</string>
+    <string name="label_tint_on">着色启用</string>
+    <string name="label_tint_off">着色禁用</string>
     <string name="label_color">配色</string>
     <string name="label_navigation_bar_color_primary">主色</string>
     <string name="label_navigation_bar_color_accent">点缀色</string>

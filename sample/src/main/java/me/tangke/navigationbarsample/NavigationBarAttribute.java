@@ -2,6 +2,7 @@ package me.tangke.navigationbarsample;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -14,6 +15,7 @@ import com.larswerkman.holocolorpicker.ColorPicker;
 
 import me.tangke.navigationbar.NavigationBar;
 import me.tangke.navigationbar.NavigationBarActivity;
+import me.tangke.navigationbar.NavigationBarItem;
 
 public class NavigationBarAttribute extends NavigationBarActivity implements OnClickListener,
         CompoundButton.OnCheckedChangeListener, RadioGroup.OnCheckedChangeListener, ColorPicker
@@ -24,6 +26,7 @@ public class NavigationBarAttribute extends NavigationBarActivity implements OnC
     private CheckBox mDisplayShowCustom;
 
     private ToggleButton mToggle;
+    private ToggleButton mTint;
 
     private RadioGroup mNavigationMode;
     private RadioGroup mColors;
@@ -33,6 +36,8 @@ public class NavigationBarAttribute extends NavigationBarActivity implements OnC
     private ColorPicker mColorPrimaryPicker;
     private ColorPicker mColorAccentPicker;
     private ColorPicker mTextColorPrimaryPicker;
+
+    private NavigationBarItem mLike;
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -44,6 +49,9 @@ public class NavigationBarAttribute extends NavigationBarActivity implements OnC
     public void onContentChanged() {
         super.onContentChanged();
         final NavigationBar navigationBar = getNavigationBar();
+        mLike = navigationBar.newNavigationBarItem(R.id.like, null, R.drawable.ic_like, Gravity
+                .RIGHT);
+        navigationBar.getSecondaryNavigationBarItemGroup().addNavigationBarItem(mLike);
         mDisplayOptions = navigationBar.getDisplayOptions();
         mDisplayShowPrimaryAsUp = (CheckBox) findViewById(R.id.displayPrimaryNavigationAsUp);
         mDisplayShowPrimaryAsUp.setOnCheckedChangeListener(this);
@@ -55,6 +63,9 @@ public class NavigationBarAttribute extends NavigationBarActivity implements OnC
         mDisplayShowCustom.setOnCheckedChangeListener(this);
         mToggle = (ToggleButton) findViewById(R.id.toggle);
         mToggle.setOnClickListener(this);
+
+        mTint = (ToggleButton) findViewById(R.id.tint);
+        mTint.setOnClickListener(this);
 
         mNavigationMode = (RadioGroup) findViewById(R.id.navigationMode);
         mNavigationMode.setOnCheckedChangeListener(this);
@@ -75,6 +86,13 @@ public class NavigationBarAttribute extends NavigationBarActivity implements OnC
                     getNavigationBar().hide();
                 } else {
                     getNavigationBar().show();
+                }
+                break;
+            case R.id.tint:
+                if (mTint.isChecked()) {
+                    mLike.setTintEnable(true);
+                } else {
+                    mLike.setTintEnable(false);
                 }
                 break;
         }

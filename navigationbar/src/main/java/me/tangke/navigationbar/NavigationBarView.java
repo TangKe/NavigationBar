@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.Resources.Theme;
 import android.content.res.TypedArray;
-import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.ColorDrawable;
@@ -115,8 +114,8 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
 
         mUpNavigationBarItem = new NavigationBarButton(context, R.id.upNavigationItem,
                 (TextView) inflater.inflate(R.layout.layout_navigation_bar_item,
-                        primaryNavigationItemContainer, false),
-                Gravity.LEFT, mNavigationTextAppearance);
+                        primaryNavigationItemContainer, false), Gravity.LEFT,
+                mNavigationTextAppearance);
         mUpNavigationBarItem.setIcon(mUpIndicator);
         mUpNavigationBarItem.setTitle(mUpIndicatorText);
         mUpNavigationBarItem.setVisible(false);
