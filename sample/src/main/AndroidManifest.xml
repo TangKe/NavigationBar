@@ -14,8 +14,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".NavigationFeature"/>
-
     </application>
 
 </manifest>

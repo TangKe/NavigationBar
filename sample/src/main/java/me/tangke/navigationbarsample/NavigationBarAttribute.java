@@ -43,6 +43,8 @@ public class NavigationBarAttribute extends NavigationBarActivity implements OnC
     @Override
     public void onContentChanged() {
         super.onContentChanged();
+        final NavigationBar navigationBar = getNavigationBar();
+        mDisplayOptions = navigationBar.getDisplayOptions();
         mDisplayShowPrimaryAsUp = (CheckBox) findViewById(R.id.displayPrimaryNavigationAsUp);
         mDisplayShowPrimaryAsUp.setOnCheckedChangeListener(this);
         mDisplayShowTitle = (CheckBox) findViewById(R.id.displayShowTitle);
@@ -57,7 +59,7 @@ public class NavigationBarAttribute extends NavigationBarActivity implements OnC
         mNavigationMode = (RadioGroup) findViewById(R.id.navigationMode);
         mNavigationMode.setOnCheckedChangeListener(this);
 
-        getNavigationBar().setCustomView(R.layout.layout_custom_view);
+        navigationBar.setCustomView(R.layout.layout_custom_view);
 
         mColorPrimaryPicker = (ColorPicker) findViewById(R.id.color);
         mColorPrimaryPicker.setOnColorSelectedListener(this);
