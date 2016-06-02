@@ -29,6 +29,7 @@
                 android:id="@+id/displayShowTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="@string/label_display_options_display_show_title"/>
 
             <CheckBox
@@ -66,19 +67,57 @@
     <RadioGroup
         android:id="@+id/navigationMode"
         android:layout_width="match_parent"
-        android:checkedButton="@+id/standard"
         android:layout_height="wrap_content"
+        android:checkedButton="@+id/standard"
         android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/standard"
             android:layout_width="wrap_content"
-            android:text="@string/label_navigation_mode_standard"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="@string/label_navigation_mode_standard"/>
+
         <RadioButton
             android:id="@+id/list"
             android:layout_width="wrap_content"
-            android:text="@string/label_navigation_mode_list"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="@string/label_navigation_mode_list"/>
     </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_color"/>
+
+    <RadioGroup
+        android:id="@+id/colors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checkedButton="@+id/colorPrimary"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/colorPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_navigation_bar_color_primary"/>
+
+        <RadioButton
+            android:id="@+id/colorAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_navigation_bar_color_accent"/>
+
+        <RadioButton
+            android:id="@+id/textColorPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_navigation_bar_text_color_primary"/>
+    </RadioGroup>
+
+    <com.larswerkman.holocolorpicker.ColorPicker
+        android:id="@+id/color"
+        android:layout_width="200dp"
+        android:layout_height="200dp"/>
+
 </LinearLayout>

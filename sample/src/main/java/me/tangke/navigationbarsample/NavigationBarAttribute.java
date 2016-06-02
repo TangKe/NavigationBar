@@ -1,6 +1,7 @@
 package me.tangke.navigationbarsample;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -9,11 +10,14 @@ import android.widget.CompoundButton;
 import android.widget.RadioGroup;
 import android.widget.ToggleButton;
 
+import com.larswerkman.holocolorpicker.ColorPicker;
+
 import me.tangke.navigationbar.NavigationBar;
 import me.tangke.navigationbar.NavigationBarActivity;
 
 public class NavigationBarAttribute extends NavigationBarActivity implements OnClickListener,
-        CompoundButton.OnCheckedChangeListener, RadioGroup.OnCheckedChangeListener {
+        CompoundButton.OnCheckedChangeListener, RadioGroup.OnCheckedChangeListener, ColorPicker
+                .OnColorSelectedListener {
     private CheckBox mDisplayShowPrimaryAsUp;
     private CheckBox mDisplayShowTitle;
     private CheckBox mDisplayShowLogo;
@@ -22,8 +26,13 @@ public class NavigationBarAttribute extends NavigationBarActivity implements OnC
     private ToggleButton mToggle;
 
     private RadioGroup mNavigationMode;
+    private RadioGroup mColors;
 
     private int mDisplayOptions;
+
+    private ColorPicker mColorPrimaryPicker;
+    private ColorPicker mColorAccentPicker;
+    private ColorPicker mTextColorPrimaryPicker;
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -49,6 +58,11 @@ public class NavigationBarAttribute extends NavigationBarActivity implements OnC
         mNavigationMode.setOnCheckedChangeListener(this);
 
         getNavigationBar().setCustomView(R.layout.layout_custom_view);
+
+        mColorPrimaryPicker = (ColorPicker) findViewById(R.id.color);
+        mColorPrimaryPicker.setOnColorSelectedListener(this);
+        mColors = (RadioGroup) findViewById(R.id.colors);
+        mColors.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -102,14 +116,34 @@ public class NavigationBarAttribute extends NavigationBarActivity implements OnC
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         final NavigationBar navigationBar = getNavigationBar();
-        switch (checkedId) {
-            case R.id.standard:
-                navigationBar.setNavigationMode(NavigationBar.NAVIGATION_MODE_STANDARD);
+        if (group == mNavigationMode) {
+            switch (checkedId) {
+                case R.id.standard:
+                    navigationBar.setNavigationMode(NavigationBar.NAVIGATION_MODE_STANDARD);
+                    break;
+                case R.id.list:
+                    navigationBar.setNavigationMode(NavigationBar.NAVIGATION_MODE_LIST);
+                    navigationBar.setListNavigationCallbacks(ArrayAdapter.createFromResource(this, R
+                                    .array.list_navigation, android.R.layout
+                                    .simple_dropdown_item_1line),
+                            null);
+                    break;
+            }
+        }
+
+    }
+
+    @Override
+    public void onColorSelected(int color) {
+        switch (mColors.getCheckedRadioButtonId()) {
+            case R.id.colorPrimary:
+                getNavigationBar().setNavigationBarColorPrimary(color);
                 break;
-            case R.id.list:
-                navigationBar.setNavigationMode(NavigationBar.NAVIGATION_MODE_LIST);
-                navigationBar.setListNavigationCallbacks(ArrayAdapter.createFromResource(this, R
-                        .array.list_navigation, android.R.layout.simple_dropdown_item_1line), null);
+            case R.id.colorAccent:
+                getNavigationBar().setNavigationBarColorAccent(color);
+                break;
+            case R.id.textColorPrimary:
+                getNavigationBar().setNavigationBarTextColorPrimary(color);
                 break;
         }
     }

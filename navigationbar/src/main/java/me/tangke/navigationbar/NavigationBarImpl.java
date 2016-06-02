@@ -266,17 +266,17 @@ abstract class NavigationBarImpl implements NavigationBar,
 
     @Override
     public void setNavigationBarColorPrimary(int color) {
-
+        mNavigationBarView.setNavigationBarColorPrimary(color);
     }
 
     @Override
     public void setNavigationBarColorAccent(int color) {
-
+        mNavigationBarView.setNavigationBarColorAccent(color);
     }
 
     @Override
     public void setNavigationBarTextColorPrimary(int color) {
-
+        mNavigationBarView.setNavigationBarTextColorPrimary(color);
     }
 
     @Override

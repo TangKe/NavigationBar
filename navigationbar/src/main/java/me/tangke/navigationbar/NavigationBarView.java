@@ -8,6 +8,7 @@ import android.content.res.TypedArray;
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.TextUtils.TruncateAt;
@@ -43,6 +44,7 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
     private int mNavigationBarTextColorPrimary;
 
     private int mNavigationTextAppearance;
+    private int mNavigationBarTitleTextStyle;
 
     public NavigationBarView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -62,6 +64,9 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
 
         mNavigationTextAppearance = a.getResourceId(R.styleable.NavigationBar_navigationTextStyle,
                 R.style.TextAppearance_NavigationBar_Navigation);
+        mNavigationBarTitleTextStyle = a.getResourceId(R.styleable
+                .NavigationBar_navigationBarTitleTextStyle, R.style
+                .TextAppearance_NavigationBar_Title);
 
         prepareNavigationBarContent();
         theme.resolveAttribute(R.attr.navigationBarColorPrimary, value, true);
@@ -73,9 +78,7 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
         theme.resolveAttribute(R.attr.navigationBarTextColorPrimary, value, true);
         setNavigationBarTextColorPrimary(value.data);
 
-        mTitleNavigationBarItem.text.setTextAppearance(context,
-                a.getResourceId(R.styleable.NavigationBar_navigationBarTitleTextStyle, R.style
-                        .TextAppearance_NavigationBar_Title));
+
         mDisplayOptions = a.getInteger(R.styleable.NavigationBar_navigationBarDisplayOptions,
                 NavigationBar.DISPLAY_SHOW_TITLE);
         applyDisplayOptions();
@@ -104,7 +107,8 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
                 .secondaryNavigationItemContainer,
                 (ViewGroup) findViewById(R.id.secondaryNavigationItemContainer), Gravity.END);
         mTitleNavigationBarItem = new NavigationBarTitle(context, R.id.navigationTitle,
-                (TextView) findViewById(R.id.navigationTitle), Gravity.LEFT);
+                (TextView) findViewById(R.id.navigationTitle), Gravity.LEFT,
+                mNavigationBarTitleTextStyle);
 
         mListNavigation = (Spinner) findViewById(R.id.listNavigation);
         mNavigationCustomContainer = (ViewGroup) findViewById(R.id.navigationCustomContainer);
@@ -245,8 +249,16 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
     public void setNavigationBarColorPrimary(int color) {
         mNavigationBarColorPrimary = color;
         //处理背景
-        getBackground().setColorFilter(new PorterDuffColorFilter
-                (mNavigationBarColorPrimary, PorterDuff.Mode.SRC_IN));
+        Drawable background = getBackground();
+        if (null != background) {
+            if (background instanceof ColorDrawable && Build.VERSION.SDK_INT >= Build
+                    .VERSION_CODES.HONEYCOMB) {
+                ((ColorDrawable) background).setColor(color);
+            } else {
+                background.setColorFilter(new PorterDuffColorFilter
+                        (mNavigationBarColorPrimary, PorterDuff.Mode.SRC_IN));
+            }
+        }
     }
 
     public void setNavigationBarColorAccent(int color) {

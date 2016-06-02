@@ -11,15 +11,13 @@ import android.widget.TextView;
  *
  * @author Tank
  */
-public class NavigationBarTitle extends NavigationBarItem {
-    TextView text;
+public class NavigationBarTitle extends NavigationBarButton {
     private int mIconSize;
 
     private boolean mIsIconVisible;
 
-    NavigationBarTitle(Context context, int id, TextView view, int gravity) {
-        super(context, id, view, gravity);
-        text = view;
+    NavigationBarTitle(Context context, int id, TextView view, int gravity, int textAppearance) {
+        super(context, id, view, gravity, textAppearance);
         mIconSize = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 40, context.getResources()
                         .getDisplayMetrics());
@@ -33,37 +31,15 @@ public class NavigationBarTitle extends NavigationBarItem {
     @Override
     protected void onInvalidate() {
         super.onInvalidate();
-
-        //标题
-        text.setText(title);
+        if (!mIsIconVisible) {
+            text.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+        }
 
         //图标
         if (null != icon) {
             icon.setBounds(0, 0, mIconSize, mIconSize);
-        }
-        if (!mIsIconVisible) {
-            text.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-        } else {
-            Drawable left = null, right = null, top = null, bottom = null;
-            switch (gravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
-                case Gravity.LEFT:
-                    left = icon;
-                    break;
-                case Gravity.RIGHT:
-                    right = icon;
-                    break;
-            }
-
-            switch (gravity & Gravity.VERTICAL_GRAVITY_MASK) {
-                case Gravity.TOP:
-                    top = icon;
-                    break;
-                case Gravity.BOTTOM:
-                    bottom = icon;
-                    break;
-            }
-
-            text.setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom);
+            //应用图标不支持着色
+            icon.setColorFilter(null);
         }
     }
 }

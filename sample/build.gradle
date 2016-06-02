@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "me.tangke.navigationbarsample"
-        minSdkVersion 7
+        minSdkVersion 8
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -22,4 +22,5 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':navigationbar')
+    compile 'com.larswerkman:HoloColorPicker:1.5'
 }

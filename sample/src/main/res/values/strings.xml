@@ -15,6 +15,11 @@
     <string name="label_navigation_mode_standard">标准</string>
     <string name="label_navigation_mode_list">列表</string>
 
+    <string name="label_color">配色</string>
+    <string name="label_navigation_bar_color_primary">主色</string>
+    <string name="label_navigation_bar_color_accent">点缀色</string>
+    <string name="label_navigation_bar_text_color_primary">文本主色</string>
+
     <array name="list_navigation">
         <item>测试1</item>
         <item>测试2</item>
