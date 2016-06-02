@@ -23,8 +23,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
-    static ColorFilter sColorAccentFilter;
-    static ColorFilter sTextColorPrimaryFilter;
     private ViewGroup mNavigationCustomContainer;
 
     private Spinner mListNavigation;
@@ -38,6 +36,11 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
     private NavigationBarTitle mTitleNavigationBarItem;
     private NavigationBarItemGroup mSecondaryNavigationBarItemGroup;
     private NavigationBarButton mUpNavigationBarItem;
+
+    //主要颜色
+    private int mNavigationBarColorPrimary;
+    private int mNavigationBarColorAccent;
+    private int mNavigationBarTextColorPrimary;
 
     private int mNavigationTextAppearance;
 
@@ -54,30 +57,21 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
         theme.resolveAttribute(R.attr.navigationBarUpIndicator, value, true);
         mUpIndicator = 0 < value.resourceId ? resources.getDrawable(value.resourceId) : null;
 
-        theme.resolveAttribute(R.attr.navigationBarColorAccent, value, true);
-        if (TypedValue.TYPE_REFERENCE == value.type) {
-            sColorAccentFilter = new PorterDuffColorFilter(
-                    resources.getColor(value.resourceId), PorterDuff.Mode.SRC_IN);
-        } else {
-            sColorAccentFilter = new PorterDuffColorFilter(value.data, PorterDuff.Mode.SRC_IN);
-        }
-
-        theme.resolveAttribute(R.attr.navigationBarTextColorPrimary, value, true);
-        if (TypedValue.TYPE_REFERENCE == value.type) {
-            sTextColorPrimaryFilter = new PorterDuffColorFilter(
-                    resources.getColor(value.resourceId), PorterDuff.Mode.SRC_IN);
-        } else {
-            sTextColorPrimaryFilter = new PorterDuffColorFilter(value.data, PorterDuff.Mode.SRC_IN);
-        }
-
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.NavigationBar,
-                defStyleAttr,
-                R.style.Widget_NavigationBar);
+                defStyleAttr, R.style.Widget_NavigationBar);
 
         mNavigationTextAppearance = a.getResourceId(R.styleable.NavigationBar_navigationTextStyle,
                 R.style.TextAppearance_NavigationBar_Navigation);
 
         prepareNavigationBarContent();
+        theme.resolveAttribute(R.attr.navigationBarColorPrimary, value, true);
+        setNavigationBarColorPrimary(value.data);
+
+        theme.resolveAttribute(R.attr.navigationBarColorAccent, value, true);
+        setNavigationBarColorAccent(value.data);
+
+        theme.resolveAttribute(R.attr.navigationBarTextColorPrimary, value, true);
+        setNavigationBarTextColorPrimary(value.data);
 
         mTitleNavigationBarItem.text.setTextAppearance(context,
                 a.getResourceId(R.styleable.NavigationBar_navigationBarTitleTextStyle, R.style
@@ -113,18 +107,13 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
                 (TextView) findViewById(R.id.navigationTitle), Gravity.LEFT);
 
         mListNavigation = (Spinner) findViewById(R.id.listNavigation);
-        Drawable listBackground = mListNavigation.getBackground();
-        if (null != listBackground) {
-            listBackground.setColorFilter(sTextColorPrimaryFilter);
-        }
         mNavigationCustomContainer = (ViewGroup) findViewById(R.id.navigationCustomContainer);
 
         mUpNavigationBarItem = new NavigationBarButton(context, R.id.upNavigationItem,
                 (TextView) inflater.inflate(R.layout.layout_navigation_bar_item,
                         primaryNavigationItemContainer, false),
-                Gravity.LEFT);
-        mUpNavigationBarItem.setIcon(mUpIndicator.mutate());
-        mUpNavigationBarItem.text.setTextAppearance(context, mNavigationTextAppearance);
+                Gravity.LEFT, mNavigationTextAppearance);
+        mUpNavigationBarItem.setIcon(mUpIndicator);
         mUpNavigationBarItem.setTitle(mUpIndicatorText);
         mUpNavigationBarItem.setVisible(false);
         mPrimaryNavigationBarItemGroup.addNavigationBarItem(mUpNavigationBarItem, 0);
@@ -222,10 +211,9 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
             gravity) {
         final Context context = getContext();
         NavigationBarButton item = new NavigationBarButton(context, id, (TextView) LayoutInflater
-                .from(context)
-                .inflate(R.layout.layout_navigation_bar_item, getPrimaryNavigationItemGroup()
-                        .group, false), gravity);
-        item.text.setTextAppearance(context, mNavigationTextAppearance);
+                .from(context).inflate(R.layout.layout_navigation_bar_item,
+                        getPrimaryNavigationItemGroup().group, false), gravity,
+                mNavigationTextAppearance);
         item.setIcon(icon);
         item.setTitle(title);
         return item;
@@ -252,5 +240,43 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
     @Override
     public void onGlobalLayout() {
         resolveTitleOverlap();
+    }
+
+    public void setNavigationBarColorPrimary(int color) {
+        mNavigationBarColorPrimary = color;
+        //处理背景
+        getBackground().setColorFilter(new PorterDuffColorFilter
+                (mNavigationBarColorPrimary, PorterDuff.Mode.SRC_IN));
+    }
+
+    public void setNavigationBarColorAccent(int color) {
+        mNavigationBarColorAccent = color;
+        //处理导航
+        mPrimaryNavigationBarItemGroup.setTintColor(color);
+        mSecondaryNavigationBarItemGroup.setTintColor(color);
+    }
+
+    public void setNavigationBarTextColorPrimary(int color) {
+        mNavigationBarTextColorPrimary = color;
+        mTitleNavigationBarItem.setTintColor(color);
+
+        //处理列表导航
+        Drawable listBackground = mListNavigation.getBackground();
+        if (null != listBackground) {
+            listBackground.setColorFilter(new PorterDuffColorFilter
+                    (mNavigationBarTextColorPrimary, PorterDuff.Mode.SRC_IN));
+        }
+    }
+
+    public int getNavigationBarColorPrimary() {
+        return mNavigationBarColorPrimary;
+    }
+
+    public int getNavigationBarColorAccent() {
+        return mNavigationBarColorAccent;
+    }
+
+    public int getNavigationBarTextColorPrimary() {
+        return mNavigationBarTextColorPrimary;
     }
 }

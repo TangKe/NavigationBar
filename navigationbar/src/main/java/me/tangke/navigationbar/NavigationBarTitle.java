@@ -12,7 +12,6 @@ import android.widget.TextView;
  * @author Tank
  */
 public class NavigationBarTitle extends NavigationBarItem {
-
     TextView text;
     private int mIconSize;
 
@@ -26,47 +25,45 @@ public class NavigationBarTitle extends NavigationBarItem {
                         .getDisplayMetrics());
     }
 
+    public void setIconVisible(boolean visible) {
+        mIsIconVisible = visible;
+        invalidate();
+    }
+
     @Override
-    public void setIcon(Drawable icon) {
-        this.icon = icon;
+    protected void onInvalidate() {
+        super.onInvalidate();
+
+        //标题
+        text.setText(title);
+
+        //图标
         if (null != icon) {
             icon.setBounds(0, 0, mIconSize, mIconSize);
         }
-
-        Drawable left = null, right = null, top = null, bottom = null;
-        switch (gravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
-            case Gravity.LEFT:
-                left = icon;
-                break;
-            case Gravity.RIGHT:
-                right = icon;
-                break;
-        }
-
-        switch (gravity & Gravity.VERTICAL_GRAVITY_MASK) {
-            case Gravity.TOP:
-                top = icon;
-                break;
-            case Gravity.BOTTOM:
-                bottom = icon;
-                break;
-        }
-
-        if (mIsIconVisible) {
-            text.setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom);
-        } else {
+        if (!mIsIconVisible) {
             text.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+        } else {
+            Drawable left = null, right = null, top = null, bottom = null;
+            switch (gravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
+                case Gravity.LEFT:
+                    left = icon;
+                    break;
+                case Gravity.RIGHT:
+                    right = icon;
+                    break;
+            }
+
+            switch (gravity & Gravity.VERTICAL_GRAVITY_MASK) {
+                case Gravity.TOP:
+                    top = icon;
+                    break;
+                case Gravity.BOTTOM:
+                    bottom = icon;
+                    break;
+            }
+
+            text.setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom);
         }
-    }
-
-    public void setIconVisible(boolean visible) {
-        mIsIconVisible = visible;
-        setIcon(icon);
-    }
-
-    @Override
-    public void setTitle(CharSequence title) {
-        super.setTitle(title);
-        text.setText(title);
     }
 }

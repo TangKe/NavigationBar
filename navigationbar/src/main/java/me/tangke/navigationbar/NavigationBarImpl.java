@@ -2,6 +2,7 @@ package me.tangke.navigationbar;
 
 import android.app.Activity;
 import android.content.res.Resources.Theme;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -51,16 +52,13 @@ abstract class NavigationBarImpl implements NavigationBar,
         final TypedValue value = mValue;
         theme.resolveAttribute(R.attr.windowNavigationBarOverlay, value, true);
         mIsNavigationBarOverlay = 0 != value.data;
-        mNavigationBarContainer = (ViewGroup) mInflater
-                .inflate(
-                        mIsNavigationBarOverlay ? R.layout.layout_navigation_bar_overlay
-                                : R.layout.layout_navigation_bar, null);
+        mNavigationBarContainer = (ViewGroup) mInflater.inflate(mIsNavigationBarOverlay ? R
+                .layout.layout_navigation_bar_overlay : R.layout.layout_navigation_bar, null);
 
         mNavigationBarContentContainer = (ViewGroup) mNavigationBarContainer
                 .findViewById(R.id.navigationBarContentContainer);
         final NavigationBarView navigationBarView = mNavigationBarView = (NavigationBarView)
-                mNavigationBarContainer
-                        .findViewById(R.id.navigationBar);
+                mNavigationBarContainer.findViewById(R.id.navigationBar);
 
         theme.resolveAttribute(R.attr.windowNavigationBar, value, true);
         mHasNavigationBar = 0 != value.data;
@@ -264,6 +262,21 @@ abstract class NavigationBarImpl implements NavigationBar,
         if (null != mOnNavigationItemClickListener) {
             mOnNavigationItemClickListener.onNavigationItemClick(item);
         }
+    }
+
+    @Override
+    public void setNavigationBarColorPrimary(int color) {
+
+    }
+
+    @Override
+    public void setNavigationBarColorAccent(int color) {
+
+    }
+
+    @Override
+    public void setNavigationBarTextColorPrimary(int color) {
+
     }
 
     @Override

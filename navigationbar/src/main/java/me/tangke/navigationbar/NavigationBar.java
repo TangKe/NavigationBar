@@ -188,6 +188,17 @@ public interface NavigationBar {
                                            int gravity);
 
     /**
+     * Set the tint color of {@link NavigationBar}
+     *
+     * @param color
+     */
+    void setNavigationBarColorPrimary(int color);
+
+    void setNavigationBarTextColorPrimary(int color);
+
+    void setNavigationBarColorAccent(int color);
+
+    /**
      * Dropdown item click callback
      *
      * @author Tank

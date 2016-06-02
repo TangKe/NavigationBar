@@ -36,6 +36,7 @@ public class NavigationBarItemGroup extends NavigationBarItem implements
         mNavigationBarItems.add(item);
         group.addView(item.view, index);
         item.setOnNavigationBarItemListener(onNavigationItemClickListener);
+        invalidate();
     }
 
     @Override
@@ -46,6 +47,7 @@ public class NavigationBarItemGroup extends NavigationBarItem implements
         NavigationBarItem item = mNavigationBarItems.remove(index);
         group.removeView(item.view);
         item.setOnNavigationBarItemListener(null);
+        invalidate();
     }
 
     @Override
@@ -60,43 +62,14 @@ public class NavigationBarItemGroup extends NavigationBarItem implements
     }
 
     @Override
-    void setOnNavigationBarItemListener(OnNavigationItemClickListener listener) {
-        super.setOnNavigationBarItemListener(listener);
+    protected void onInvalidate() {
+        super.onInvalidate();
         for (NavigationBarItem item : mNavigationBarItems) {
-            item.setOnNavigationBarItemListener(listener);
+            item.setTintEnable(isTintEnable);
+            item.setTintColor(tintColor);
+//            item.setTitle(title);
+//            item.setIcon(icon);
+            item.setOnNavigationBarItemListener(onNavigationItemClickListener);
         }
-    }
-
-    @Override
-    public void setIcon(Drawable icon) {
-        setIcon(icon, 0);
-    }
-
-    public void setIcon(Drawable icon, int index) {
-        if (index < 0 || getNavigationBarItemCount() >= index) {
-            return;
-        }
-        NavigationBarItem item = mNavigationBarItems.get(index);
-        item.setIcon(icon);
-    }
-
-    @Override
-    public void setTitle(CharSequence title) {
-        super.setTitle(title);
-        setTitle(title, 0);
-    }
-
-    @Override
-    public void setTitle(int res) {
-        super.setTitle(res);
-        setTitle(title, 0);
-    }
-
-    public void setTitle(CharSequence title, int index) {
-        if (index < 0 || getNavigationBarItemCount() >= index) {
-            return;
-        }
-        NavigationBarItem item = mNavigationBarItems.get(index);
-        item.setTitle(title);
     }
 }

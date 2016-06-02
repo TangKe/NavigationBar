@@ -1,6 +1,10 @@
 package me.tangke.navigationbar;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,6 +27,8 @@ public abstract class NavigationBarItem implements OnClickListener {
     int gravity;
 
     boolean isTintEnable = true;
+    int tintColor;
+    ColorFilter tintColorFilter;
 
     OnNavigationItemClickListener onNavigationItemClickListener;
 
@@ -33,7 +39,7 @@ public abstract class NavigationBarItem implements OnClickListener {
         this.view = view;
         this.gravity = gravity;
         view.setOnClickListener(this);
-        this.mContext = new WeakReference<Context>(context);
+        this.mContext = new WeakReference<>(context);
     }
 
     public int getId() {
@@ -52,7 +58,14 @@ public abstract class NavigationBarItem implements OnClickListener {
         setIcon(0 < res ? mContext.get().getResources().getDrawable(res) : null);
     }
 
-    public abstract void setIcon(Drawable icon);
+    public void setIcon(Drawable icon) {
+        if (null != icon) {
+            this.icon = icon.mutate();
+        } else {
+            this.icon = null;
+        }
+        invalidate();
+    }
 
     public CharSequence getTitle() {
         return title;
@@ -64,10 +77,12 @@ public abstract class NavigationBarItem implements OnClickListener {
 
     public void setTitle(CharSequence title) {
         this.title = title;
+        invalidate();
     }
 
     public void setVisible(boolean visible) {
         view.setVisibility(visible ? View.VISIBLE : View.GONE);
+        invalidate();
     }
 
     public boolean isVisible() {
@@ -89,6 +104,16 @@ public abstract class NavigationBarItem implements OnClickListener {
 
     public boolean isTintEnable() {
         return isTintEnable;
+    }
+
+    public void setTintColor(int tintColor) {
+        this.tintColor = tintColor;
+        if (tintColor != Color.TRANSPARENT) {
+            tintColorFilter = new PorterDuffColorFilter(tintColor, PorterDuff.Mode.SRC_IN);
+        } else {
+            tintColorFilter = null;
+        }
+        invalidate();
     }
 
     @Override

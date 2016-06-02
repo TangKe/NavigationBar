@@ -32,9 +32,12 @@
     </attr>
     <!-- 导航文字样式 -->
     <attr name="navigationTextStyle" format="reference"/>
-    <!-- 导航栏的文本主色 -->
+    <!-- 导航栏的颜色 -->
+    <!-- 导航背景 -->
     <attr name="navigationBarColorPrimary" format="reference|color"/>
+    <!-- 导航标题颜色 -->
     <attr name="navigationBarTextColorPrimary" format="reference|color"/>
+    <!-- 导航按钮颜色 -->
     <attr name="navigationBarColorAccent" format="reference|color"/>
     <!-- 导航按钮样式 -->
     <attr name="autoStateButtonStyle" format="reference"/>

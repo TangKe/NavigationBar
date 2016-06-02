@@ -12,24 +12,20 @@ import android.widget.TextView;
  */
 public class NavigationBarButton extends NavigationBarItem {
     TextView text;
+    int textAppearance;
 
-    NavigationBarButton(Context context, int id, TextView view, int gravity) {
+    NavigationBarButton(Context context, int id, TextView view, int gravity, int textAppearance) {
         super(context, id, view, gravity);
         text = view;
+        this.textAppearance = textAppearance;
     }
 
     @Override
-    public void setIcon(Drawable icon) {
-        if (this.icon == icon) {
-            return;
-        }
+    protected void onInvalidate() {
+        //文本
+        text.setText(title);
 
-        this.icon = icon;
-
-        if (null != icon) {
-            icon.setColorFilter(isTintEnable ? NavigationBarView.sColorAccentFilter : null);
-        }
-
+        //图标
         Drawable left = null, right = null, top = null, bottom = null;
         switch (gravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
             case Gravity.LEFT:
@@ -48,18 +44,22 @@ public class NavigationBarButton extends NavigationBarItem {
                 bottom = icon;
                 break;
         }
-
         text.setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom);
+        tint(icon);
+        tint(text);
     }
 
-    @Override
-    public void setTitle(CharSequence title) {
-        super.setTitle(title);
-        text.setText(title);
+    protected void tint(Drawable drawable) {
+        if (null != drawable) {
+            drawable.setColorFilter(isTintEnable ? tintColorFilter : null);
+        }
     }
 
-    @Override
-    protected void onInvalidate() {
-        setIcon(this.icon);
+    protected void tint(TextView text) {
+        if (isTintEnable) {
+            text.setTextColor(tintColor);
+        } else {
+            text.setTextAppearance(text.getContext(), textAppearance);
+        }
     }
 }
