@@ -24,6 +24,7 @@ public class NavigationBarButton extends NavigationBarItem {
     protected void onInvalidate() {
         //文本
         text.setText(title);
+        text.setTextAppearance(text.getContext(), textAppearance);
 
         //图标
         Drawable left = null, right = null, top = null, bottom = null;
