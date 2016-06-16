@@ -63,4 +63,9 @@ public class NavigationBarButton extends NavigationBarItem {
             text.setTextAppearance(text.getContext(), textAppearance);
         }
     }
+
+    public void setTextAppearance(int textAppearance) {
+        this.textAppearance = textAppearance;
+        invalidate();
+    }
 }
