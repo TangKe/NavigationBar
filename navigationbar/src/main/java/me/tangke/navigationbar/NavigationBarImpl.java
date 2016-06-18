@@ -50,13 +50,20 @@ abstract class NavigationBarImpl implements NavigationBar,
 
         final Theme theme = mContext.get().getTheme();
         final TypedValue value = mValue;
+        mNavigationBarContainer = (ViewGroup) mInflater.inflate(R.layout.layout_navigation_bar,
+                null);
+
         theme.resolveAttribute(R.attr.windowNavigationBarOverlay, value, true);
         mIsNavigationBarOverlay = 0 != value.data;
-        mNavigationBarContainer = (ViewGroup) mInflater.inflate(mIsNavigationBarOverlay ? R
-                .layout.layout_navigation_bar_overlay : R.layout.layout_navigation_bar, null);
 
         mNavigationBarContentContainer = (ViewGroup) mNavigationBarContainer
                 .findViewById(R.id.navigationBarContentContainer);
+        if (mIsNavigationBarOverlay) {
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams)
+                    mNavigationBarContentContainer.getLayoutParams();
+            layoutParams.topMargin = 0;
+            mNavigationBarContentContainer.setLayoutParams(layoutParams);
+        }
         final NavigationBarView navigationBarView = mNavigationBarView = (NavigationBarView)
                 mNavigationBarContainer.findViewById(R.id.navigationBar);
 
