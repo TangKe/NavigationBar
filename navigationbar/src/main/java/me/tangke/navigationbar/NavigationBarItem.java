@@ -34,7 +34,7 @@ public abstract class NavigationBarItem implements OnClickListener {
 
     private WeakReference<Context> mContext;
 
-    NavigationBarItem(Context context, int id, View view, int gravity) {
+    public NavigationBarItem(Context context, int id, View view, int gravity) {
         this.id = id;
         this.view = view;
         this.gravity = gravity;

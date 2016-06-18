@@ -17,7 +17,7 @@ public class NavigationBarItemGroup extends NavigationBarItem implements
     private ArrayList<NavigationBarItem> mNavigationBarItems = new ArrayList<NavigationBarItem>();
     ViewGroup group;
 
-    NavigationBarItemGroup(Context context, int id, ViewGroup group, int gravity) {
+    public NavigationBarItemGroup(Context context, int id, ViewGroup group, int gravity) {
         super(context, id, group, gravity);
         this.group = group;
     }

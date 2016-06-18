@@ -14,7 +14,7 @@ import android.widget.TextView;
 public class NavigationBarTitle extends NavigationBarButton {
     private boolean mIsIconVisible;
 
-    NavigationBarTitle(Context context, int id, TextView view, int gravity, int textAppearance) {
+    public NavigationBarTitle(Context context, int id, TextView view, int gravity, int textAppearance) {
         super(context, id, view, gravity, textAppearance);
     }
 

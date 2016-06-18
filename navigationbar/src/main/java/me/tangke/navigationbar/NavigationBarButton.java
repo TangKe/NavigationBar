@@ -14,7 +14,7 @@ public class NavigationBarButton extends NavigationBarItem {
     TextView text;
     int textAppearance;
 
-    NavigationBarButton(Context context, int id, TextView view, int gravity, int textAppearance) {
+    public NavigationBarButton(Context context, int id, TextView view, int gravity, int textAppearance) {
         super(context, id, view, gravity);
         text = view;
         this.textAppearance = textAppearance;
