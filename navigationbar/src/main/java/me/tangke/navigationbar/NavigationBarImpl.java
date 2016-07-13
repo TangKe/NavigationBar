@@ -141,11 +141,19 @@ abstract class NavigationBarImpl implements NavigationBar,
     @Override
     public void show() {
         mNavigationBarView.setVisibility(View.VISIBLE);
+        ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams)
+                mNavigationBarContentContainer.getLayoutParams();
+        marginLayoutParams.topMargin = mIsNavigationBarOverlay ? 0 : mNavigationBarView.getHeight();
+        mNavigationBarContentContainer.setLayoutParams(marginLayoutParams);
     }
 
     @Override
     public void hide() {
         mNavigationBarView.setVisibility(View.GONE);
+        ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams)
+                mNavigationBarContentContainer.getLayoutParams();
+        marginLayoutParams.topMargin = 0;
+        mNavigationBarContentContainer.setLayoutParams(marginLayoutParams);
     }
 
     @Override
@@ -261,13 +269,14 @@ abstract class NavigationBarImpl implements NavigationBar,
             return;
         }
 
+        if (null != mOnNavigationItemClickListener) {
+            mOnNavigationItemClickListener.onNavigationItemClick(item);
+        }
+
         if (item.id == R.id.upNavigationItem) {
             if (!onNavigateUp()) {
                 mContext.get().finish();
             }
-        }
-        if (null != mOnNavigationItemClickListener) {
-            mOnNavigationItemClickListener.onNavigationItemClick(item);
         }
     }
 
