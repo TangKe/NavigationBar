@@ -5,7 +5,7 @@ you need use this fucking awesome features with the following steps:
 1. add follow line to your build.gradle file
 
 ```groovy
-compile 'me.tangke.navigationbar:navigationbar:0.2'
+compile 'me.tangke.navigationbar:navigationbar:0.42'
 ```
 2. make your activity extend from NavigationBarActivity.
 3. apply the Theme.NavigationBar or the theme which inherited from Theme.NavigationBar to your Activity
