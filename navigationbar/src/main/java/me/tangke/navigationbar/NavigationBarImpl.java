@@ -21,7 +21,7 @@ import java.lang.ref.WeakReference;
  *
  * @author Tank
  */
-public abstract class NavigationBarImpl implements NavigationBar,
+abstract class NavigationBarImpl implements NavigationBar,
         OnItemSelectedListener, OnNavigationItemClickListener {
     private ViewGroup mNavigationBarContainer;
     private NavigationBarView mNavigationBarView;

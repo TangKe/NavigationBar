@@ -21,7 +21,7 @@ import java.lang.ref.WeakReference;
  *
  * @author Tank
  */
-public class NavigationBarActivityImpl extends NavigationBarImpl {
+class NavigationBarActivityImpl extends NavigationBarImpl {
     private WeakReference<Activity> mActivity;
 
     public NavigationBarActivityImpl(Activity activity) {

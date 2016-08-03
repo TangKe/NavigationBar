@@ -11,7 +11,7 @@ import java.lang.ref.WeakReference;
 /**
  * {@link NavigationBar} implements for Fragment
  */
-public class NavigationBarFragmentImpl extends NavigationBarActivityImpl {
+class NavigationBarFragmentImpl extends NavigationBarActivityImpl {
     private WeakReference<Fragment> mFragment;
 
     public NavigationBarFragmentImpl(Fragment fragment) {
