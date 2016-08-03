@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.Resources.Theme;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.ColorDrawable;
@@ -249,7 +250,7 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
         mNavigationBarColorPrimary = color;
         //处理背景
         Drawable background = getBackground();
-        if (null != background) {
+        if (null != background && 0 != Color.TRANSPARENT) {
             if (background instanceof ColorDrawable && Build.VERSION.SDK_INT >= Build
                     .VERSION_CODES.HONEYCOMB) {
                 ((ColorDrawable) background).setColor(color);
