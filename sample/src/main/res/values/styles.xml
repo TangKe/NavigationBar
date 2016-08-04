@@ -1,7 +1,6 @@
 <resources>
 
     <style name="AppBaseTheme" parent="Theme.NavigationBar">
-        <item name="navigationBarColorPrimary">@null</item>
     </style>
 
     <style name="AppTheme" parent="AppBaseTheme">

@@ -1,5 +1,5 @@
 package me.tangke.navigationbar;
 
-interface OnNavigationItemClickListener {
+public interface OnNavigationItemClickListener {
     void onNavigationItemClick(NavigationBarItem item);
 }
