@@ -2,12 +2,12 @@ package me.tangke.navigationbar;
 
 import android.app.Activity;
 import android.content.res.Resources.Theme;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.FrameLayout.LayoutParams;
@@ -21,8 +21,9 @@ import java.lang.ref.WeakReference;
  *
  * @author Tank
  */
-public abstract class NavigationBarImpl implements NavigationBar,
-        OnItemSelectedListener, OnNavigationItemClickListener {
+abstract class NavigationBarImpl implements NavigationBar,
+        OnItemSelectedListener, OnNavigationItemClickListener, ViewTreeObserver
+                .OnGlobalLayoutListener {
     private ViewGroup mNavigationBarContainer;
     private NavigationBarView mNavigationBarView;
     private ViewGroup mNavigationBarContentContainer;
@@ -42,6 +43,9 @@ public abstract class NavigationBarImpl implements NavigationBar,
 
     private TypedValue mValue = new TypedValue();
 
+    private boolean mLastIsVisible;
+    private int mLastHeight;
+
     public NavigationBarImpl(Activity context) {
         mContext = new WeakReference<>(context);
         mInflater = LayoutInflater.from(context);
@@ -58,12 +62,7 @@ public abstract class NavigationBarImpl implements NavigationBar,
 
         mNavigationBarContentContainer = (ViewGroup) mNavigationBarContainer
                 .findViewById(R.id.navigationBarContentContainer);
-        if (mIsNavigationBarOverlay) {
-            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams)
-                    mNavigationBarContentContainer.getLayoutParams();
-            layoutParams.topMargin = 0;
-            mNavigationBarContentContainer.setLayoutParams(layoutParams);
-        }
+
         final NavigationBarView navigationBarView = mNavigationBarView = (NavigationBarView)
                 mNavigationBarContainer.findViewById(R.id.navigationBar);
 
@@ -82,6 +81,7 @@ public abstract class NavigationBarImpl implements NavigationBar,
                 .setOnNavigationBarItemListener(this);
 
         navigationBarView.getListNavigation().setOnItemSelectedListener(this);
+        navigationBarView.getViewTreeObserver().addOnGlobalLayoutListener(this);
     }
 
     public void ensureNavigationBarTheme() {
@@ -141,19 +141,11 @@ public abstract class NavigationBarImpl implements NavigationBar,
     @Override
     public void show() {
         mNavigationBarView.setVisibility(View.VISIBLE);
-        ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams)
-                mNavigationBarContentContainer.getLayoutParams();
-        marginLayoutParams.topMargin = mIsNavigationBarOverlay ? 0 : mNavigationBarView.getHeight();
-        mNavigationBarContentContainer.setLayoutParams(marginLayoutParams);
     }
 
     @Override
     public void hide() {
         mNavigationBarView.setVisibility(View.GONE);
-        ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams)
-                mNavigationBarContentContainer.getLayoutParams();
-        marginLayoutParams.topMargin = 0;
-        mNavigationBarContentContainer.setLayoutParams(marginLayoutParams);
     }
 
     @Override
@@ -307,5 +299,25 @@ public abstract class NavigationBarImpl implements NavigationBar,
                                                   int gravity) {
         return newNavigationBarItem(id, 0 < title ? mContext.get().getString(title) : null, icon,
                 gravity);
+    }
+
+    @Override
+    public void onGlobalLayout() {
+        resolveContentOffset();
+    }
+
+    private void resolveContentOffset() {
+        boolean isVisible = View.VISIBLE == mNavigationBarView.getVisibility();
+        int height = mNavigationBarView.getHeight();
+        boolean changed = isVisible != mLastIsVisible || mLastHeight != height;
+        if (changed) {
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams)
+                    mNavigationBarContentContainer.getLayoutParams();
+            layoutParams.topMargin = mIsNavigationBarOverlay || !isVisible ? 0 :
+                    mNavigationBarView.getHeight();
+            mNavigationBarContentContainer.setLayoutParams(layoutParams);
+        }
+        mLastIsVisible = isVisible;
+        mLastHeight = height;
     }
 }
