@@ -95,6 +95,11 @@ public class NavigationBarAttribute extends NavigationBarActivity implements OnC
                     mLike.setTintEnable(false);
                 }
                 break;
+            case R.id.addSecondaryItem:
+                NavigationBarItem like = getNavigationBar().newNavigationBarItem(R.id.like, null,
+                        R.drawable.ic_like, Gravity.RIGHT);
+                getNavigationBar().getSecondaryNavigationBarItemGroup().addNavigationBarItem(like);
+                break;
         }
     }
 
@@ -150,7 +155,6 @@ public class NavigationBarAttribute extends NavigationBarActivity implements OnC
                     break;
             }
         }
-
     }
 
     @Override

@@ -2,7 +2,6 @@ package me.tangke.navigationbar;
 
 import android.app.Activity;
 import android.content.res.Resources.Theme;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -43,6 +42,9 @@ abstract class NavigationBarImpl implements NavigationBar,
     private Drawable mDefaultIcon;
 
     private TypedValue mValue = new TypedValue();
+
+    private boolean mLastIsVisible;
+    private int mLastHeight;
 
     public NavigationBarImpl(Activity context) {
         mContext = new WeakReference<>(context);
@@ -305,9 +307,17 @@ abstract class NavigationBarImpl implements NavigationBar,
     }
 
     private void resolveContentOffset() {
-        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams)
-                mNavigationBarContentContainer.getLayoutParams();
-        layoutParams.topMargin = mIsNavigationBarOverlay ? 0 : mNavigationBarView.getHeight();
-        mNavigationBarContentContainer.setLayoutParams(layoutParams);
+        boolean isVisible = View.VISIBLE == mNavigationBarView.getVisibility();
+        int height = mNavigationBarView.getHeight();
+        boolean changed = isVisible != mLastIsVisible || mLastHeight != height;
+        if (changed) {
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams)
+                    mNavigationBarContentContainer.getLayoutParams();
+            layoutParams.topMargin = mIsNavigationBarOverlay || !isVisible ? 0 :
+                    mNavigationBarView.getHeight();
+            mNavigationBarContentContainer.setLayoutParams(layoutParams);
+        }
+        mLastIsVisible = isVisible;
+        mLastHeight = height;
     }
 }
