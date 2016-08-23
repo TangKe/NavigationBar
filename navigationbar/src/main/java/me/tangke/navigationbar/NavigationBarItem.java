@@ -123,7 +123,7 @@ public abstract class NavigationBarItem implements OnClickListener {
         }
     }
 
-    public void setOnNavigationBarItemListener(OnNavigationItemClickListener listener) {
+    void setOnNavigationBarItemListener(OnNavigationItemClickListener listener) {
         this.onNavigationItemClickListener = listener;
     }
 

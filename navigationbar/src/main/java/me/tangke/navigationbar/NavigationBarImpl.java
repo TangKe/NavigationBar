@@ -186,7 +186,7 @@ abstract class NavigationBarImpl implements NavigationBar,
 
     }
 
-    public void setOnNavigationItemClickListener(OnNavigationItemClickListener listener) {
+    void setOnNavigationItemClickListener(OnNavigationItemClickListener listener) {
         mOnNavigationItemClickListener = listener;
     }
 
