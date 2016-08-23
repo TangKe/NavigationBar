@@ -42,5 +42,6 @@
     <!-- 导航按钮样式 -->
     <attr name="autoStateButtonStyle" format="reference"/>
     <attr name="navigationDropdownStyle" format="reference"/>
+    <attr name="navigationContentFitSystemWindow" format="boolean"/>
 
 </resources>
