@@ -1,6 +1,7 @@
 package me.tangke.navigationbar;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.content.res.Resources.Theme;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
@@ -46,13 +47,17 @@ abstract class NavigationBarImpl implements NavigationBar,
     private boolean mLastIsVisible;
     private int mLastHeight;
 
+    private boolean mIsTranslucentStatusBar;
+    private int mStatusBarHeight;
+
     public NavigationBarImpl(Activity context) {
         mContext = new WeakReference<>(context);
         mInflater = LayoutInflater.from(context);
 
         ensureNavigationBarTheme();
 
-        final Theme theme = mContext.get().getTheme();
+        final Resources resources = context.getResources();
+        final Theme theme = context.getTheme();
         final TypedValue value = mValue;
         mNavigationBarContainer = (ViewGroup) mInflater.inflate(R.layout.layout_navigation_bar,
                 null);
@@ -70,6 +75,14 @@ abstract class NavigationBarImpl implements NavigationBar,
         mHasNavigationBar = 0 != value.data;
         navigationBarView.setVisibility(mHasNavigationBar ? View.VISIBLE
                 : View.GONE);
+
+        theme.resolveAttribute(android.R.attr.windowTranslucentStatus, value, true);
+        mIsTranslucentStatusBar = 0 != value.data;
+
+        int statusRes = resources.getIdentifier("status_bar_height", "dimen", "android");
+        if (statusRes > 0) {
+            mStatusBarHeight = resources.getDimensionPixelSize(statusRes);
+        }
 
         navigationBarView.getPrimaryNavigationItemGroup()
                 .setOnNavigationBarItemListener(this);
@@ -307,15 +320,14 @@ abstract class NavigationBarImpl implements NavigationBar,
     }
 
     private void resolveContentOffset() {
+        final View navigationBarContentContainer = mNavigationBarContentContainer;
         boolean isVisible = View.VISIBLE == mNavigationBarView.getVisibility();
         int height = mNavigationBarView.getHeight();
         boolean changed = isVisible != mLastIsVisible || mLastHeight != height;
         if (changed) {
-            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams)
-                    mNavigationBarContentContainer.getLayoutParams();
-            layoutParams.topMargin = mIsNavigationBarOverlay || !isVisible ? 0 :
+            int paddingTop = mIsNavigationBarOverlay || !isVisible ? (mIsTranslucentStatusBar ? mStatusBarHeight : 0) :
                     mNavigationBarView.getHeight();
-            mNavigationBarContentContainer.setLayoutParams(layoutParams);
+            navigationBarContentContainer.setPadding(navigationBarContentContainer.getPaddingLeft(), paddingTop, navigationBarContentContainer.getPaddingRight(), navigationBarContentContainer.getPaddingBottom());
         }
         mLastIsVisible = isVisible;
         mLastHeight = height;

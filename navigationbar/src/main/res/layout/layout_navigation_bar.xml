@@ -9,8 +9,7 @@
         android:id="@id/navigationBarContentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/navigationBarSize"
-        android:fitsSystemWindows="?attr/navigationContentFitSystemWindow"
+        android:clipToPadding="false"
         android:foreground="?android:attr/windowContentOverlay"/>
 
     <me.tangke.navigationbar.NavigationBarView

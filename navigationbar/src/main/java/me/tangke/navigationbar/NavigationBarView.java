@@ -250,7 +250,7 @@ class NavigationBarView extends FrameLayout implements OnGlobalLayoutListener {
         mNavigationBarColorPrimary = color;
         //处理背景
         Drawable background = getBackground();
-        if (null != background && 0 != Color.TRANSPARENT) {
+        if (null != background && color != Color.TRANSPARENT) {
             if (background instanceof ColorDrawable && Build.VERSION.SDK_INT >= Build
                     .VERSION_CODES.HONEYCOMB) {
                 ((ColorDrawable) background).setColor(color);

@@ -15,7 +15,6 @@
         <item name="navigationBarTextColorPrimary">@color/text_color_primary_reverse</item>
         <item name="navigationBarColorAccent">@color/color_accent_reverse</item>
         <item name="navigationDropdownStyle">@style/Widget.NavigationDropDown</item>
-        <item name="navigationContentFitSystemWindow">true</item>
     </style>
 
     <style name="Theme.NavigationBar.Light" parent="Theme.Base.NavigationBar.Light">
