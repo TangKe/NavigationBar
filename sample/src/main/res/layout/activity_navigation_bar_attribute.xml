@@ -1,137 +1,149 @@
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/label_display_options"/>
-
-    <HorizontalScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/label_display_options"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <CheckBox
+                    android:id="@+id/displayPrimaryNavigationAsUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_display_options_display_show_primary_as_up"/>
+
+                <CheckBox
+                    android:id="@+id/displayShowTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/label_display_options_display_show_title"/>
+
+                <CheckBox
+                    android:id="@+id/displayShowLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_display_options_display_show_logo"/>
+
+                <CheckBox
+                    android:id="@+id/displayShowCustom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_display_options_display_show_custom"/>
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_toggle"/>
+
+        <ToggleButton
+            android:id="@+id/toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="@string/label_hide"
+            android:textOn="@string/label_show"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_navigation_mode"/>
+
+        <RadioGroup
+            android:id="@+id/navigationMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checkedButton="@+id/standard"
             android:orientation="horizontal">
 
-
-            <CheckBox
-                android:id="@+id/displayPrimaryNavigationAsUp"
+            <RadioButton
+                android:id="@+id/standard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_display_options_display_show_primary_as_up"/>
+                android:text="@string/label_navigation_mode_standard"/>
 
-            <CheckBox
-                android:id="@+id/displayShowTitle"
+            <RadioButton
+                android:id="@+id/list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="@string/label_display_options_display_show_title"/>
+                android:text="@string/label_navigation_mode_list"/>
+        </RadioGroup>
 
-            <CheckBox
-                android:id="@+id/displayShowLogo"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_tint"/>
+
+        <ToggleButton
+            android:id="@+id/tint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="@string/label_tint_off"
+            android:textOn="@string/label_tint_on"/>
+
+        <RadioGroup
+            android:id="@+id/colors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checkedButton="@+id/colorPrimary"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_display_options_display_show_logo"/>
+                android:text="@string/label_navigation_bar_color_primary"/>
 
-            <CheckBox
-                android:id="@+id/displayShowCustom"
+            <RadioButton
+                android:id="@+id/colorAccent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_display_options_display_show_custom"/>
-        </LinearLayout>
+                android:text="@string/label_navigation_bar_color_accent"/>
 
-    </HorizontalScrollView>
+            <RadioButton
+                android:id="@+id/textColorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_navigation_bar_text_color_primary"/>
+        </RadioGroup>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_toggle"/>
+        <com.larswerkman.holocolorpicker.ColorPicker
+            android:id="@+id/color"
+            android:layout_width="200dp"
+            android:layout_height="200dp"/>
 
-    <ToggleButton
-        android:id="@+id/toggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textOff="@string/label_hide"
-        android:textOn="@string/label_show"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/label_navigation_mode"/>
-
-    <RadioGroup
-        android:id="@+id/navigationMode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:checkedButton="@+id/standard"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/standard"
+        <Button
+            android:id="@+id/addSecondaryItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_navigation_mode_standard"/>
+            android:onClick="onClick"
+            android:text="@string/button_add_secondary_item"/>
 
-        <RadioButton
-            android:id="@+id/list"
+        <Button
+            android:id="@+id/removeSecondaryItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_navigation_mode_list"/>
-    </RadioGroup>
+            android:onClick="onClick"
+            android:text="@string/button_remove_secondary_item"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/label_tint"/>
-
-    <ToggleButton
-        android:id="@+id/tint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textOff="@string/label_tint_off"
-        android:textOn="@string/label_tint_on"/>
-
-    <RadioGroup
-        android:id="@+id/colors"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:checkedButton="@+id/colorPrimary"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/colorPrimary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_navigation_bar_color_primary"/>
-
-        <RadioButton
-            android:id="@+id/colorAccent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_navigation_bar_color_accent"/>
-
-        <RadioButton
-            android:id="@+id/textColorPrimary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_navigation_bar_text_color_primary"/>
-    </RadioGroup>
-
-    <com.larswerkman.holocolorpicker.ColorPicker
-        android:id="@+id/color"
-        android:layout_width="200dp"
-        android:layout_height="200dp"/>
-
-    <Button
-        android:id="@+id/addSecondaryItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:text="@string/button_add_secondary_item"/>
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

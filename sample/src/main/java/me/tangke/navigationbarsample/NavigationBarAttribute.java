@@ -16,6 +16,7 @@ import com.larswerkman.holocolorpicker.ColorPicker;
 import me.tangke.navigationbar.NavigationBar;
 import me.tangke.navigationbar.NavigationBarActivity;
 import me.tangke.navigationbar.NavigationBarItem;
+import me.tangke.navigationbar.NavigationBarItemGroup;
 
 public class NavigationBarAttribute extends NavigationBarActivity implements OnClickListener,
         CompoundButton.OnCheckedChangeListener, RadioGroup.OnCheckedChangeListener, ColorPicker
@@ -99,6 +100,10 @@ public class NavigationBarAttribute extends NavigationBarActivity implements OnC
                 NavigationBarItem like = getNavigationBar().newNavigationBarItem(R.id.like, null,
                         R.drawable.ic_like, Gravity.RIGHT);
                 getNavigationBar().getSecondaryNavigationBarItemGroup().addNavigationBarItem(like);
+                break;
+            case R.id.removeSecondaryItem:
+                NavigationBarItemGroup group = getNavigationBar().getSecondaryNavigationBarItemGroup();
+                group.removeNavigationBarItem(0);
                 break;
         }
     }

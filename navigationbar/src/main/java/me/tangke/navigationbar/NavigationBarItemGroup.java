@@ -41,7 +41,7 @@ public class NavigationBarItemGroup extends NavigationBarItem implements
 
     @Override
     public void removeNavigationBarItem(int index) {
-        if (index < 0 || getNavigationBarItemCount() >= index) {
+        if (index < 0 || getNavigationBarItemCount() <= index) {
             return;
         }
         NavigationBarItem item = mNavigationBarItems.remove(index);
@@ -54,6 +54,8 @@ public class NavigationBarItemGroup extends NavigationBarItem implements
     public void removeNavigationBarItem(NavigationBarItem item) {
         mNavigationBarItems.remove(item);
         group.removeView(item.view);
+        item.setOnNavigationBarItemListener(null);
+        invalidate();
     }
 
     @Override
